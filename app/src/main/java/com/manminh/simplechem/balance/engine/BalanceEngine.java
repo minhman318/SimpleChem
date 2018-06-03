@@ -1,7 +1,7 @@
 package com.manminh.simplechem.balance.engine;
 
-import com.manminh.simplechem.balance.model.Equation;
+import com.manminh.simplechem.model.Equation;
 
 public interface BalanceEngine {
-    Equation balance(Equation before);
+    boolean balance(Equation equation);
 }

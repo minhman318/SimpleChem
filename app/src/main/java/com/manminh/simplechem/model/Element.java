@@ -1,4 +1,4 @@
-package com.manminh.simplechem.balance.model;
+package com.manminh.simplechem.model;
 
 public class Element {
     private String mSymbol;
