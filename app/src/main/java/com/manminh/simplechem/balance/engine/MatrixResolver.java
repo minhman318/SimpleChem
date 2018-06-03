@@ -27,15 +27,13 @@ public class MatrixResolver {
             }
         }
         Fraction factor = bf.changeSign().divide(tf);
-        for (int i = 0; i < mData[baseRow].length; i++) {
-            if (i == var) {
-                mData[targetRow][i].setToZero();
-            } else {
-                mData[targetRow][i] = mData[targetRow][i]
-                        .multiply(factor)
-                        .add(mData[baseRow][i]);
-            }
+        mData[targetRow][var].setToZero();
+        for (int i = var + 1; i < mData[baseRow].length; i++) {
+            mData[targetRow][i] = mData[targetRow][i]
+                    .multiply(factor)
+                    .add(mData[baseRow][i]);
         }
+
     }
 
     private void gaussJordanEliminate() {

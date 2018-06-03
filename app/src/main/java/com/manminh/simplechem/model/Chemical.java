@@ -6,7 +6,7 @@ public class Chemical {
 
     public Chemical(Formula formula) {
         mFormula = formula;
-        mFactor = -1;
+        mFactor = 1;
     }
 
     public void setFactor(Integer factor) {

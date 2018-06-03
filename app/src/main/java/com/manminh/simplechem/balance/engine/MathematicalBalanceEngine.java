@@ -13,23 +13,21 @@ import java.util.Set;
 public class MathematicalBalanceEngine implements BalanceEngine {
 
     @Override
-    public boolean balance(Equation equation) {
+    public void balance(Equation equation) {
         Fraction[][] data = buildData(equation);
         if (data != null) {
             MatrixResolver resolver = new MatrixResolver(data);
-            Fraction[] result = resolver.solve();
-            if (result.length == equation.chemicalCount()) {
-                normalized(equation, result);
+            Fraction[] factors = resolver.solve();
+            if (factors.length == equation.chemicalCount()) {
+                normalized(equation, factors);
                 equation.markBalanced();
-                return true;
             }
         }
-        return false;
     }
 
-    private void normalized(Equation equation, Fraction[] result) {
+    private void normalized(Equation equation, Fraction[] factors) {
         int i = 0;
-        int[] realFactor = Fraction.toIntegerEquation(result);
+        int[] realFactor = Fraction.toIntegerEquation(factors);
         for (Chemical chem : equation.getBefore()) {
             chem.setFactor(realFactor[i]);
             i++;
@@ -41,77 +39,95 @@ public class MathematicalBalanceEngine implements BalanceEngine {
     }
 
     private Fraction[][] buildData(Equation equation) {
-
         List<Chemical> before = equation.getBefore();
         List<Chemical> after = equation.getAfter();
 
-        List<Map<String, Integer>> beforeElementRef = new ArrayList<>();
-        List<Map<String, Integer>> afterElementRef = new ArrayList<>();
+        List<Map<String, Integer>> beforeMapList = new ArrayList<>();
+        List<Map<String, Integer>> afterMapList = new ArrayList<>();
 
-        Set<String> beforeElementName = new HashSet<>();
-        Set<String> afterElementName = new HashSet<>();
+        Set<String> beforeNameList = new HashSet<>();
+        Set<String> afterNameList = new HashSet<>();
 
         for (int i = 0; i < before.size(); i++) {
             HashMap<String, Integer> logger = new HashMap<>();
             before.get(i).getFormula().logElement(logger, 1);
-            beforeElementName.addAll(logger.keySet());
-            beforeElementRef.add(logger);
+            beforeNameList.addAll(logger.keySet());
+            beforeMapList.add(logger);
         }
         for (int i = 0; i < after.size(); i++) {
             HashMap<String, Integer> logger = new HashMap<>();
             after.get(i).getFormula().logElement(logger, 1);
-            afterElementName.addAll(logger.keySet());
-            afterElementRef.add(logger);
+            afterNameList.addAll(logger.keySet());
+            afterMapList.add(logger);
         }
 
-        if (!beforeElementName.containsAll(afterElementName)) {
+        if (!beforeNameList.containsAll(afterNameList)) {
             throw new IllegalArgumentException(Equation.IVALID_EQUATION_MSG);
         }
 
-        beforeElementName.addAll(afterElementName);
-        List<String> elementName = new ArrayList<>(beforeElementName);
+        if (isBalanced(beforeNameList, beforeMapList, afterMapList)) {
+            return null;
+        }
 
+        List<String> elementName = new ArrayList<>(beforeNameList);
         int varCount = before.size() + after.size();
-
         Fraction[][] data = new Fraction[varCount][varCount + 1];
 
         for (int i = 0; i < varCount; i++) {
             if (i < elementName.size()) {
                 String eName = elementName.get(i);
-                Fraction[] temp = new Fraction[varCount + 1];
+                Fraction[] row = new Fraction[varCount + 1];
                 int k = 0;
                 for (int j = 0; j < before.size(); j++) {
-                    Fraction factor = new Fraction(countElement(eName, beforeElementRef.get(j)));
-                    temp[k] = factor;
+                    Fraction factor = new Fraction(countElement(eName, beforeMapList.get(j)));
+                    row[k] = factor;
                     k++;
                 }
                 for (int j = 0; j < after.size(); j++) {
-                    Fraction factor = new Fraction(countElement(eName, afterElementRef.get(j)));
-                    temp[k] = factor.changeSign();
+                    Fraction factor = new Fraction(countElement(eName, afterMapList.get(j)));
+                    row[k] = factor.changeSign();
                     k++;
                 }
-                temp[varCount] = new Fraction(0);
-                data[i] = temp;
+                row[varCount] = new Fraction(0);
+                data[i] = row;
             } else {
-                Fraction[] dummy = new Fraction[varCount + 1];
+                Fraction[] dummyRow = new Fraction[varCount + 1];
                 for (int j = 0; j < varCount; j++) {
                     if (j == i) {
-                        dummy[j] = new Fraction(1);
+                        dummyRow[j] = new Fraction(1);
                     } else {
-                        dummy[j] = new Fraction(0);
+                        dummyRow[j] = new Fraction(0);
                     }
                 }
-                dummy[varCount] = new Fraction(1);
-                data[i] = dummy;
+                dummyRow[varCount] = new Fraction(1);
+                data[i] = dummyRow;
             }
         }
         return data;
     }
 
-    private int countElement(String name, Map<String, Integer> ref) {
-        if (ref.containsKey(name)) {
-            return ref.get(name);
+    private int countElement(String name, Map<String, Integer> map) {
+        if (map.containsKey(name)) {
+            return map.get(name);
         }
         return 0;
+    }
+
+    private boolean isBalanced(Set<String> nameList
+            , List<Map<String, Integer>> beforeMapList
+            , List<Map<String, Integer>> afterMapList) {
+
+        for (String name : nameList) {
+            int beforeCount = 0;
+            int afterCount = 0;
+            for (Map<String, Integer> map : beforeMapList) {
+                beforeCount += countElement(name, map);
+            }
+            for (Map<String, Integer> map : afterMapList) {
+                afterCount += countElement(name, map);
+            }
+            if (beforeCount != afterCount) return false;
+        }
+        return true;
     }
 }
