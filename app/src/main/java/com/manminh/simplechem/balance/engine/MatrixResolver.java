@@ -1,10 +1,8 @@
 package com.manminh.simplechem.balance.engine;
 
-import android.os.OperationCanceledException;
 import android.support.annotation.NonNull;
 
 public class MatrixResolver {
-    public static final String CANNOT_SOLVE_MSG = "Cannot solve";
     private Fraction[][] mData;
     private int mRow;
     private int mCol;
@@ -50,18 +48,19 @@ public class MatrixResolver {
         Fraction[] result = new Fraction[mRow];
         for (int i = 0; i < mRow; i++) {
             if (mData[i][i].isZero()) {
-                throw new OperationCanceledException(CANNOT_SOLVE_MSG);
+                result[i] = new Fraction(1);
             }
         }
         for (int i = mRow - 1; i >= 0; i--) {
             Fraction right = new Fraction();
+            if (result[i] != null) continue;
             for (int j = mCol - 1; j > i; j--) {
-                if (j == mCol - 1) {
-                    right = right.add(mData[i][j]);
-                } else {
-                    Fraction t1 = mData[i][j].multiply(result[j]);
-                    t1.changeSign();
-                    right = right.add(mData[i][j].multiply(result[j]).changeSign());
+                if (!mData[i][j].isZero()) {
+                    if (j == mCol - 1) {
+                        right = right.add(mData[i][j].changeSign());
+                    } else {
+                        right = right.add(mData[i][j].multiply(result[j]).changeSign());
+                    }
                 }
             }
             Fraction var = right.divide(mData[i][i]);

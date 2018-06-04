@@ -4,13 +4,11 @@ import android.support.annotation.NonNull;
 
 import java.util.Map;
 
-public class SimpleFormula extends Formula {
+public class SingleFormula extends Formula {
     private Element mElement;
 
-    public SimpleFormula(String str) {
-        if (ElementDictionary.isElementAndThrowExceptionIfNot(str)) {
-            mElement = new Element(str);
-        }
+    public SingleFormula(String str) {
+        mElement = new Element(str);
     }
 
     @Override

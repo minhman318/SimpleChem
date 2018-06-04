@@ -2,19 +2,21 @@ package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
 
+import com.manminh.simplechem.exception.ParseFormulaException;
+
 import java.util.Map;
 
 public abstract class Formula {
-    public static final String ELEMENT_NOT_SUPPORTED_MSG = "Element not supported";
-    public static final String INVALID_FORMULA_MSG = "Invalid formula string";
-
+    // defaut subscript
     private int mSubscript = 1;
 
-    public abstract String toString();
-
+    // count number of an element in the formula
     public abstract int countElement(String symbol);
 
+    // count all element and save to given map
     public abstract void logElement(@NonNull Map<String, Integer> map, int factor);
+
+    public abstract String toString();
 
     public void setSubscript(int srt) {
         mSubscript = srt;
@@ -24,11 +26,11 @@ public abstract class Formula {
         return mSubscript;
     }
 
-    public static Formula parseFormula(String str) {
+    // parse string to formula, throw ParseException
+    public static Formula parseFormula(String str) throws ParseFormulaException {
         if (str == null || str.length() < 1) {
-            throw new IllegalArgumentException(INVALID_FORMULA_MSG);
+            throw new ParseFormulaException(ParseFormulaException.EMPTY_STRING);
         }
-
         int i = str.length() - 1;
         while (i >= 0 && Character.isDigit(str.charAt(i))) {
             i--;
@@ -39,14 +41,18 @@ public abstract class Formula {
             testStr = str.substring(0, i + 1);
             factorStr = str.substring(i + 1);
         }
-        if (testStr.length() < 3 && ElementDictionary.isElement(testStr)) {
-            Formula f = new SimpleFormula(testStr);
-            if (factorStr != null) {
-                int factor = Integer.parseInt(factorStr);
-                f.setSubscript(factor);
+        if (testStr.length() < 3) {
+            if (ElementDictionary.isElement(testStr)) {
+                Formula f = new SingleFormula(testStr);
+                if (factorStr != null) {
+                    int factor = Integer.parseInt(factorStr);
+                    f.setSubscript(factor);
+                }
+                return f;
+            } else if (testStr.length() == 1) {
+                throw new ParseFormulaException(ParseFormulaException.INVALID_ELEMENT);
             }
-            return f;
         }
-        return new CompoundFormula(str);
+        return new CompoundFormula(str, 0);
     }
 }

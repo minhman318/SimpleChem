@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ElementDictionary {
+    public static final int MAX_ELEMENT_STR_LENGTH = 2;
 
-    private static Set<String> mElementRef = new HashSet<>(Arrays.asList(
+    // supported element names
+    private static Set<String> mElementNameRef = new HashSet<>(Arrays.asList(
             "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg",
             "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr",
             "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br",
@@ -14,14 +16,8 @@ public class ElementDictionary {
             "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "Hf",
             "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi"));
 
+    // check if an given element name is supported or not
     public static boolean isElement(String name) {
-        return mElementRef.contains(name) && name.length() < 3;
-    }
-
-    public static boolean isElementAndThrowExceptionIfNot(String name) {
-        if (mElementRef.contains(name)) {
-            return true;
-        }
-        throw new IllegalArgumentException(Formula.ELEMENT_NOT_SUPPORTED_MSG);
+        return name.length() <= MAX_ELEMENT_STR_LENGTH && mElementNameRef.contains(name);
     }
 }

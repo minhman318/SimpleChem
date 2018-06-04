@@ -1,5 +1,6 @@
 package com.manminh.simplechem.balance.engine;
 
+import com.manminh.simplechem.exception.FailedBalanceException;
 import com.manminh.simplechem.model.Chemical;
 import com.manminh.simplechem.model.Equation;
 
@@ -13,15 +14,20 @@ import java.util.Set;
 public class MathematicalBalanceEngine implements BalanceEngine {
 
     @Override
-    public void balance(Equation equation) {
+    public void balance(Equation equation) throws FailedBalanceException {
         Fraction[][] data = buildData(equation);
-        if (data != null) {
-            MatrixResolver resolver = new MatrixResolver(data);
+        MatrixResolver resolver = new MatrixResolver(data);
+        try {
             Fraction[] factors = resolver.solve();
+            if (anyIsZero(factors)) {
+                throw new FailedBalanceException(FailedBalanceException.CANNOT_BALANCE);
+            }
             if (factors.length == equation.chemicalCount()) {
                 normalized(equation, factors);
                 equation.markBalanced();
             }
+        } catch (ArithmeticException ex) {
+            throw new FailedBalanceException(FailedBalanceException.CANNOT_BALANCE, ex);
         }
     }
 
@@ -38,7 +44,7 @@ public class MathematicalBalanceEngine implements BalanceEngine {
         }
     }
 
-    private Fraction[][] buildData(Equation equation) {
+    private Fraction[][] buildData(Equation equation) throws FailedBalanceException {
         List<Chemical> before = equation.getBefore();
         List<Chemical> after = equation.getAfter();
 
@@ -62,11 +68,11 @@ public class MathematicalBalanceEngine implements BalanceEngine {
         }
 
         if (!beforeNameList.containsAll(afterNameList)) {
-            throw new IllegalArgumentException(Equation.IVALID_EQUATION_MSG);
+            throw new FailedBalanceException(FailedBalanceException.ELEMENT_NOT_EQUAL);
         }
 
         if (isBalanced(beforeNameList, beforeMapList, afterMapList)) {
-            return null;
+            throw new FailedBalanceException(FailedBalanceException.NO_NEED_BALANCE);
         }
 
         List<String> elementName = new ArrayList<>(beforeNameList);
@@ -99,7 +105,7 @@ public class MathematicalBalanceEngine implements BalanceEngine {
                         dummyRow[j] = new Fraction(0);
                     }
                 }
-                dummyRow[varCount] = new Fraction(1);
+                dummyRow[varCount] = new Fraction(-1);
                 data[i] = dummyRow;
             }
         }
@@ -129,5 +135,12 @@ public class MathematicalBalanceEngine implements BalanceEngine {
             if (beforeCount != afterCount) return false;
         }
         return true;
+    }
+
+    private boolean anyIsZero(Fraction[] fractions) {
+        for (Fraction frac : fractions) {
+            if (frac.isZero()) return true;
+        }
+        return false;
     }
 }

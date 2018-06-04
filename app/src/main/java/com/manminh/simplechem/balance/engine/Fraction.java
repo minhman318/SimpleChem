@@ -1,6 +1,8 @@
 package com.manminh.simplechem.balance.engine;
 
 public class Fraction {
+    public static final String DIVIDE_BY_ZERO_EX = "Divide by zero";
+
     private int mNumerator;
     private int mDenominator;
 
@@ -54,12 +56,15 @@ public class Fraction {
         return result;
     }
 
-    public Fraction divide(Fraction other) {
-        Fraction result = new Fraction();
-        result.mNumerator = this.mNumerator * other.mDenominator;
-        result.mDenominator = this.mDenominator * other.mNumerator;
-        result.normilized();
-        return result;
+    public Fraction divide(Fraction other) throws ArithmeticException {
+        if (!other.isZero()) {
+            Fraction result = new Fraction();
+            result.mNumerator = this.mNumerator * other.mDenominator;
+            result.mDenominator = this.mDenominator * other.mNumerator;
+            result.normilized();
+            return result;
+        }
+        throw new ArithmeticException(DIVIDE_BY_ZERO_EX);
     }
 
     public void normilized() {
