@@ -4,6 +4,9 @@ import android.support.annotation.NonNull;
 
 import java.util.Map;
 
+/**
+ * Single formula is "H2" or "S" or "O4" in "H2SO4"
+ */
 public class SingleFormula extends Formula {
     private Element mElement;
 

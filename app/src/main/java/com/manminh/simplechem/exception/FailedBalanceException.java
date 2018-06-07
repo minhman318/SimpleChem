@@ -3,9 +3,8 @@ package com.manminh.simplechem.exception;
 public class FailedBalanceException extends Exception {
     private static String EXCEPTION_MSG = "Cannot balance exception";
 
-    public static final int NO_NEED_BALANCE = 0;
-    public static final int ELEMENT_NOT_EQUAL = 1;
-    public static final int CANNOT_BALANCE = 2;
+    public static final int HAS_BEEN_BALANCED = 0;
+    public static final int BALANCE_FAILED = 1;
 
     private int mExceptionCode = -1;
 

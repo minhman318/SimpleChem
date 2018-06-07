@@ -6,6 +6,10 @@ import com.manminh.simplechem.exception.ParseFormulaException;
 
 import java.util.Map;
 
+/**
+ * Represent a formula
+ * Composite design pattern
+ */
 public abstract class Formula {
     // defaut subscript
     private int mSubscript = 1;

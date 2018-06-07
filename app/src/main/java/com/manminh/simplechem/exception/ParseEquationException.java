@@ -4,7 +4,7 @@ public class ParseEquationException extends Exception {
     private static String EXCEPTION_MSG = "Parse equation exception";
 
     public static final int INVALID_SYNTAX = 0;
-    public static final int INVALID_FORMULA = 1;
+    public static final int INVALID_EQUATION = 1;
 
     private int mExceptionCode = -1;
 

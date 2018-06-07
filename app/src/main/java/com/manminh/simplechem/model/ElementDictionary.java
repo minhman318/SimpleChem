@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Responsible for check an element is supported or not
+ */
 public class ElementDictionary {
     public static final int MAX_ELEMENT_STR_LENGTH = 2;
 

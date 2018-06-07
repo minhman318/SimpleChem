@@ -2,8 +2,12 @@ package com.manminh.simplechem.balance.engine;
 
 import android.support.annotation.NonNull;
 
+/**
+ * Solve the matrix N row and N-1 column
+ */
 public class MatrixResolver {
-    private Fraction[][] mData;
+
+    private Fraction[][] mData; // the matrix
     private int mRow;
     private int mCol;
 
@@ -13,27 +17,9 @@ public class MatrixResolver {
         mData = data;
     }
 
-    private void eliminate(int baseRow, int targetRow, int var) {
-        Fraction bf = mData[baseRow][var];
-        Fraction tf = mData[targetRow][var];
-        if (tf.isZero()) {
-            return;
-        } else {
-            if (bf.isZero()) {
-                swapTwoRows(baseRow, targetRow);
-                return;
-            }
-        }
-        Fraction factor = bf.changeSign().divide(tf);
-        mData[targetRow][var].setToZero();
-        for (int i = var + 1; i < mData[baseRow].length; i++) {
-            mData[targetRow][i] = mData[targetRow][i]
-                    .multiply(factor)
-                    .add(mData[baseRow][i]);
-        }
-
-    }
-
+    /**
+     * Gauss Jordam eliminate algorithm
+     */
     private void gaussJordanEliminate() {
         if (mRow != mCol - 1) return;
         for (int i = 0; i < mRow - 1; i++) {
@@ -43,6 +29,39 @@ public class MatrixResolver {
         }
     }
 
+    /**
+     * Gauss Jordan eliminate variable of a row
+     *
+     * @param baseRow   is the current row index
+     * @param targetRow is the row want to eliminate (remove variable)
+     * @param varPos    is the variable position (from 0 to column - 2)
+     */
+    private void eliminate(int baseRow, int targetRow, int varPos) {
+        Fraction bf = mData[baseRow][varPos];
+        Fraction tf = mData[targetRow][varPos];
+        if (tf.isZero()) {
+            return;
+        } else {
+            if (bf.isZero()) {
+                swapTwoRows(baseRow, targetRow);
+                return;
+            }
+        }
+        Fraction factor = bf.changeSign().divide(tf);
+        mData[targetRow][varPos].setToZero();
+        for (int i = varPos + 1; i < mData[baseRow].length; i++) {
+            mData[targetRow][i] = mData[targetRow][i]
+                    .multiply(factor)
+                    .add(mData[baseRow][i]);
+        }
+
+    }
+
+    /**
+     * Solve the matrix by use Gauss Jordam eliminate
+     *
+     * @return the list of variable values (fraction)
+     */
     public Fraction[] solve() {
         this.gaussJordanEliminate();
         Fraction[] result = new Fraction[mRow];

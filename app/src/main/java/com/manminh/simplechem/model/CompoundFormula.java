@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Ex: Compound formula is "(SO4)3" in "Fe2(SO4)3"
+ */
 public class CompoundFormula extends Formula {
     private List<Formula> mFormulaList;
 

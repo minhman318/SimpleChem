@@ -1,6 +1,11 @@
 package com.manminh.simplechem.balance.engine;
 
+/**
+ * Fraction and related operation
+ */
 public class Fraction {
+
+    // Exception message
     public static final String DIVIDE_BY_ZERO_EX = "Divide by zero";
 
     private int mNumerator;
@@ -34,7 +39,8 @@ public class Fraction {
 
     public Fraction add(Fraction other) {
         Fraction result = new Fraction();
-        result.mNumerator = this.mNumerator * other.mDenominator + this.mDenominator * other.mNumerator;
+        result.mNumerator = this.mNumerator * other.mDenominator
+                + this.mDenominator * other.mNumerator;
         result.mDenominator = this.mDenominator * other.mDenominator;
         result.normilized();
         return result;
@@ -90,7 +96,8 @@ public class Fraction {
 
     public String toString() {
         if (mDenominator != 1) {
-            return String.valueOf(mNumerator) + "/" + String.valueOf(mDenominator);
+            return String.valueOf(mNumerator)
+                    + "/" + String.valueOf(mDenominator);
         }
         return String.valueOf(mNumerator);
     }
