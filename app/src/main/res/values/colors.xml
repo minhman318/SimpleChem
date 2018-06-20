@@ -5,4 +5,6 @@
     <color name="colorAccent">#363869</color>
     <color name="textColor">#E9E9ED</color>
     <color name="edittextColor">#807E9E</color>
+    <color name="gradient_start">#FF416C</color>
+    <color name="gradient_end">#FF4B2B</color>
 </resources>
