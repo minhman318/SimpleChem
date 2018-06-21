@@ -1,4 +1,4 @@
-package com.manminh.simplechem.search;
+package com.manminh.simplechem.search.engine;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.UnsupportedMimeTypeException;
@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.AsyncTask;
 
+import com.manminh.simplechem.search.engine.SearchEngine;
 
 
-public class PTHHSearchEngine  implements SearchEngine {
+public class PTHHSearchEngine extends SearchEngine {
 
     private ArrayList<String> data;
 
@@ -23,7 +24,6 @@ public class PTHHSearchEngine  implements SearchEngine {
 
     /**
      *
-     * @param source Website URL
      * @param in Join in element
      * @param out Product
      * @return
@@ -33,7 +33,7 @@ public class PTHHSearchEngine  implements SearchEngine {
     public ArrayList<String> Search(String in, String out) {
         String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+in+"&chat_san_pham=" + out;
         new SearchOperation().execute(url);
-        return search_result;
+        return data;
     }
 
 
@@ -53,7 +53,7 @@ public class PTHHSearchEngine  implements SearchEngine {
                         data_row = data_row.concat(subtext);
                     }
                 }
-                search_result.add(data_row);
+                data.add(data_row);
             } catch (IOException e) {
                 e.printStackTrace();
             }
