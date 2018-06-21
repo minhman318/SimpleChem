@@ -1,4 +1,4 @@
-package com.manminh.simplechem.balance.engine;
+package com.manminh.simplechem.balance;
 
 /**
  * Fraction and related operation

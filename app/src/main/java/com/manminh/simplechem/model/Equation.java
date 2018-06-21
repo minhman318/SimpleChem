@@ -1,9 +1,11 @@
 package com.manminh.simplechem.model;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Pair;
 
-import com.manminh.simplechem.exception.ParseEquationException;
-import com.manminh.simplechem.exception.ParseFormulaException;
+import com.manminh.simplechem.balance.exception.ParseEquationException;
+import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -255,5 +257,18 @@ public class Equation {
         }
         result += mAtChemicals.get(mAtChemicals.size() - 1).toString();
         return result;
+    }
+
+    public Spanned toHtmlSpanned() {
+        String result = "";
+        for (int i = 0; i < mBfChemicals.size() - 1; i++) {
+            result += mBfChemicals.get(i).toHtmlString() + " + ";
+        }
+        result += mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString() + Html.fromHtml("&rarr");
+        for (int i = 0; i < mAtChemicals.size() - 1; i++) {
+            result += mAtChemicals.get(i).toHtmlString() + " + ";
+        }
+        result += mAtChemicals.get(mAtChemicals.size() - 1).toHtmlString();
+        return Html.fromHtml(result);
     }
 }

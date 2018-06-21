@@ -1,6 +1,7 @@
 package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
+import android.text.Html;
 
 import java.util.Map;
 
@@ -18,6 +19,15 @@ public class SingleFormula extends Formula {
     public String toString() {
         if (getSubscript() == 1) return mElement.getSymbol();
         return mElement.getSymbol() + String.valueOf(getSubscript());
+    }
+
+    @Override
+    public String toHtmlString() {
+        if (getSubscript() == 1) return mElement.getSymbol();
+        return mElement.getSymbol()
+                + "<sub><small>"
+                + String.valueOf(getSubscript())
+                + "</small></sub>";
     }
 
     @Override

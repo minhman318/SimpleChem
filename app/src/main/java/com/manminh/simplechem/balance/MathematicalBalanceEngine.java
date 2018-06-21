@@ -1,6 +1,6 @@
-package com.manminh.simplechem.balance.engine;
+package com.manminh.simplechem.balance;
 
-import com.manminh.simplechem.exception.FailedBalanceException;
+import com.manminh.simplechem.balance.exception.FailedBalanceException;
 import com.manminh.simplechem.model.Chemical;
 import com.manminh.simplechem.model.Equation;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Implementation of mathematical balance algorithm
  */
-public class MathematicalBalanceEngine implements BalanceEngine {
+public class MathematicalBalanceEngine implements IBalanceEngine {
 
     /**
      * Balance an equation (equation will be modified)

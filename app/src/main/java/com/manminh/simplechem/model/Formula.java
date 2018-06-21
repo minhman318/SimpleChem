@@ -2,7 +2,7 @@ package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
 
-import com.manminh.simplechem.exception.ParseFormulaException;
+import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
 import java.util.Map;
 
@@ -21,6 +21,8 @@ public abstract class Formula {
     public abstract void logElement(@NonNull Map<String, Integer> map, int factor);
 
     public abstract String toString();
+
+    public abstract String toHtmlString();
 
     public void setSubscript(int srt) {
         mSubscript = srt;

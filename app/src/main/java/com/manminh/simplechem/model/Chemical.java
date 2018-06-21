@@ -32,4 +32,11 @@ public class Chemical {
         }
         return mFormula.toString();
     }
+
+    public String toHtmlString() {
+        if (mFactor != -1 && mFactor != 1) {
+            return String.valueOf(mFactor) + mFormula.toHtmlString();
+        }
+        return mFormula.toHtmlString();
+    }
 }

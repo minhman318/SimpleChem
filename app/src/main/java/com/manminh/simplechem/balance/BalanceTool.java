@@ -4,15 +4,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.manminh.simplechem.balance.engine.BalanceEngine;
-import com.manminh.simplechem.exception.FailedBalanceException;
-import com.manminh.simplechem.exception.ParseEquationException;
-import com.manminh.simplechem.exception.ParseFormulaException;
+import com.manminh.simplechem.balance.exception.FailedBalanceException;
+import com.manminh.simplechem.balance.exception.ParseEquationException;
+import com.manminh.simplechem.balance.exception.ParseFormulaException;
 import com.manminh.simplechem.model.Equation;
 
 /**
  * Balance equation asynchronously
- * Singleton
+ * Singleton design pattern
  */
 public class BalanceTool implements Runnable {
 
@@ -39,7 +38,7 @@ public class BalanceTool implements Runnable {
 
     private String mEquationStr;
     private OnBalanceResultListener mListener;
-    private BalanceEngine mEngine;
+    private IBalanceEngine mEngine;
 
     // Thread to do async task
     private Thread mWorker;
@@ -86,7 +85,7 @@ public class BalanceTool implements Runnable {
      * @param engine   engine actually balance equation
      * @param listener should be UI context
      */
-    public void balance(String equation, BalanceEngine engine, OnBalanceResultListener listener) {
+    public void balance(String equation, IBalanceEngine engine, OnBalanceResultListener listener) {
         mEquationStr = equation;
         mEngine = engine;
         mListener = listener;

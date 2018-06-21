@@ -1,8 +1,9 @@
 package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
+import android.text.Html;
 
-import com.manminh.simplechem.exception.ParseFormulaException;
+import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,24 @@ public class CompoundFormula extends Formula {
                         .append(String.valueOf(f.getSubscript()));
             } else {
                 strBuilder.append(f.toString());
+            }
+        }
+        return strBuilder.toString();
+    }
+
+    @Override
+    public String toHtmlString() {
+        StringBuilder strBuilder = new StringBuilder("");
+        for (Formula f : mFormulaList) {
+            if (f instanceof CompoundFormula && f.getSubscript() > 1) {
+                strBuilder.append("(")
+                        .append(f.toHtmlString())
+                        .append(")")
+                        .append("<sub><small>")
+                        .append(String.valueOf(f.getSubscript()))
+                        .append("</small></sub");
+            } else {
+                strBuilder.append(f.toHtmlString());
             }
         }
         return strBuilder.toString();

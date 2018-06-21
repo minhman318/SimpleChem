@@ -1,12 +1,12 @@
-package com.manminh.simplechem.balance.engine;
+package com.manminh.simplechem.balance;
 
-import com.manminh.simplechem.exception.FailedBalanceException;
+import com.manminh.simplechem.balance.exception.FailedBalanceException;
 import com.manminh.simplechem.model.Equation;
 
 /**
  * Interface of balance algorithm implementation
  */
-public interface BalanceEngine {
+public interface IBalanceEngine {
 
     /**
      * Balance an equation object, may modify the equation if balance successfully
