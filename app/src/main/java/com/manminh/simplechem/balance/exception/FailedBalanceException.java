@@ -1,5 +1,6 @@
 package com.manminh.simplechem.balance.exception;
 
+
 public class FailedBalanceException extends Exception {
     private static String EXCEPTION_MSG = "Cannot balance exception";
 
