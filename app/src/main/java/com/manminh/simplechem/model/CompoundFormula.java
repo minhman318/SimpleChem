@@ -2,62 +2,75 @@ package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
 
+import com.manminh.simplechem.exception.ParseFormulaException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Ex: Compound formula is "(SO4)3" in "Fe2(SO4)3"
+ */
 public class CompoundFormula extends Formula {
-    List<Formula> mFormulaList;
+    private List<Formula> mFormulaList;
 
-    public CompoundFormula(String str) throws IllegalArgumentException {
+    public CompoundFormula(String str, int pos) throws ParseFormulaException {
         mFormulaList = new ArrayList<>();
-        valueOf(str);
+        if (str == null || str.length() < 1) {
+            throw new ParseFormulaException(ParseFormulaException.EMPTY_STRING);
+        }
+        valueOf(str, pos);
     }
 
-    private void valueOf(String str) {
+    private void valueOf(String str, int pos) throws ParseFormulaException {
         int i = 0;
         while (i < str.length()) {
-            if (Character.isDigit(str.charAt(i))) {
+            char ch = str.charAt(i);
+            if (Character.isDigit(ch)) {
                 int s = i;
                 String srtStr;
                 while (i < str.length() && Character.isDigit(str.charAt(i))) {
                     i++;
                 }
-                if (s != i) {
-                    srtStr = str.substring(s, i);
-                } else {
-                    srtStr = str.substring(s);
-                }
+                srtStr = str.substring(s, i);
                 int srt = Integer.parseInt(srtStr);
                 mFormulaList.get(mFormulaList.size() - 1).setSubscript(srt);
-            } else if (Character.isAlphabetic(str.charAt(i))) {
+            } else if (Character.isAlphabetic(ch)) {
                 String testStr1 = str.substring(i, i + 1);
                 if (i == str.length() - 1) {
-                    if (ElementDictionary.isElementAndThrowExceptionIfNot(testStr1)) {
-                        mFormulaList.add(new SimpleFormula(testStr1));
+                    if (ElementDictionary.isElement(testStr1)) {
+                        mFormulaList.add(new SingleFormula(testStr1));
                         i++;
+                    } else {
+                        // wrong element name
+                        throw new ParseFormulaException(ParseFormulaException.INVALID_ELEMENT);
                     }
                 } else {
                     String testStr2 = str.substring(i, i + 2);
                     if (ElementDictionary.isElement(testStr2)) {
-                        mFormulaList.add(new SimpleFormula(testStr2));
+                        mFormulaList.add(new SingleFormula(testStr2));
                         i = i + 2;
-                    } else if (ElementDictionary.isElementAndThrowExceptionIfNot(testStr1)) {
-                        mFormulaList.add(new SimpleFormula(testStr1));
+                    } else if (ElementDictionary.isElement(testStr1)) {
+                        mFormulaList.add(new SingleFormula(testStr1));
                         i++;
+                    } else {
+                        // wrong element name
+                        throw new ParseFormulaException(ParseFormulaException.INVALID_ELEMENT);
                     }
                 }
-            } else if (str.charAt(i) == '(') {
+            } else if (ch == '(') {
                 int close = str.lastIndexOf(')');
                 if (close != -1) {
                     String inside = str.substring(i + 1, close);
-                    mFormulaList.add(new CompoundFormula(inside));
+                    mFormulaList.add(new CompoundFormula(inside, pos + i));
                     i = close + 1;
                 } else {
-                    throw new IllegalArgumentException(Formula.INVALID_FORMULA_MSG);
+                    // not found ')'
+                    throw new ParseFormulaException(ParseFormulaException.INVALID_PARENTHESES);
                 }
             } else {
-                throw new IllegalArgumentException(Formula.INVALID_FORMULA_MSG);
+                // contains illegal character
+                throw new ParseFormulaException(ParseFormulaException.INVALID_CHARACTER);
             }
         }
     }

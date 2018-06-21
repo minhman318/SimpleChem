@@ -1,6 +1,10 @@
 package com.manminh.simplechem.model;
 
+/**
+ * Element like H, O, C or S
+ */
 public class Element {
+
     private String mSymbol;
 
     public Element(String symbol) {

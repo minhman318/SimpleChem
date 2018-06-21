@@ -1,96 +1,103 @@
 package com.manminh.simplechem.balance.engine;
 
+import com.manminh.simplechem.exception.FailedBalanceException;
 import com.manminh.simplechem.model.Chemical;
 import com.manminh.simplechem.model.Equation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
+/**
+ * Implementation of mathematical balance algorithm
+ */
 public class MathematicalBalanceEngine implements BalanceEngine {
 
+    /**
+     * Balance an equation (equation will be modified)
+     *
+     * @param equation will be balanced
+     * @throws FailedBalanceException if illegal equation or cannot solve matrix
+     */
     @Override
-    public void balance(Equation equation) {
+    public void balance(Equation equation) throws FailedBalanceException {
         Fraction[][] data = buildData(equation);
-        if (data != null) {
-            MatrixResolver resolver = new MatrixResolver(data);
-            Fraction[] factors = resolver.solve();
+        MatrixResolver resolver = new MatrixResolver(data);
+        try {
+            Fraction[] factors = resolver.solve(); // may throw ArithmeticException
+            if (anyIsZero(factors)) {
+                throw new FailedBalanceException(FailedBalanceException.BALANCE_FAILED);
+            }
             if (factors.length == equation.chemicalCount()) {
                 normalized(equation, factors);
                 equation.markBalanced();
             }
+        } catch (ArithmeticException e) {
+            throw new FailedBalanceException(FailedBalanceException.BALANCE_FAILED, e);
         }
     }
 
-    private void normalized(Equation equation, Fraction[] factors) {
+    /**
+     * Convert from fraction factors to integer factors and set equation's factors
+     *
+     * @param equation  will be modified (setFactor)
+     * @param fractions is fraction factors
+     */
+    private void normalized(Equation equation, Fraction[] fractions) {
         int i = 0;
-        int[] realFactor = Fraction.toIntegerEquation(factors);
+        int[] intFactor = Fraction.toIntegerEquation(fractions);
         for (Chemical chem : equation.getBefore()) {
-            chem.setFactor(realFactor[i]);
+            chem.setFactor(intFactor[i]);
             i++;
         }
         for (Chemical chem : equation.getAfter()) {
-            chem.setFactor(realFactor[i]);
+            chem.setFactor(intFactor[i]);
             i++;
         }
     }
 
-    private Fraction[][] buildData(Equation equation) {
-        List<Chemical> before = equation.getBefore();
-        List<Chemical> after = equation.getAfter();
+    /**
+     * Convert equation object to mathematical equations to solve (matrix)
+     *
+     * @param equation will be converted to 2D matrix
+     * @return 2D fraction matrix
+     * @throws FailedBalanceException if equation is illegal or equation has already been balanced
+     */
+    private Fraction[][] buildData(Equation equation) throws FailedBalanceException {
 
-        List<Map<String, Integer>> beforeMapList = new ArrayList<>();
-        List<Map<String, Integer>> afterMapList = new ArrayList<>();
-
-        Set<String> beforeNameList = new HashSet<>();
-        Set<String> afterNameList = new HashSet<>();
-
-        for (int i = 0; i < before.size(); i++) {
-            HashMap<String, Integer> logger = new HashMap<>();
-            before.get(i).getFormula().logElement(logger, 1);
-            beforeNameList.addAll(logger.keySet());
-            beforeMapList.add(logger);
-        }
-        for (int i = 0; i < after.size(); i++) {
-            HashMap<String, Integer> logger = new HashMap<>();
-            after.get(i).getFormula().logElement(logger, 1);
-            afterNameList.addAll(logger.keySet());
-            afterMapList.add(logger);
+        // Check if the equation has already been balanced
+        if (equation.isBalanced()) {
+            throw new FailedBalanceException(FailedBalanceException.HAS_BEEN_BALANCED);
         }
 
-        if (!beforeNameList.containsAll(afterNameList)) {
-            throw new IllegalArgumentException(Equation.IVALID_EQUATION_MSG);
-        }
+        // Get all element names
+        List<String> elementName = equation.getAllElementName();
 
-        if (isBalanced(beforeNameList, beforeMapList, afterMapList)) {
-            return null;
-        }
+        // Column of the matrix or variables number of equations
+        int varCount = equation.beforeChemCount() + equation.afterChemCount();
 
-        List<String> elementName = new ArrayList<>(beforeNameList);
-        int varCount = before.size() + after.size();
+        // The fraction matrix
         Fraction[][] data = new Fraction[varCount][varCount + 1];
 
+        // Set the matrix
         for (int i = 0; i < varCount; i++) {
-            if (i < elementName.size()) {
+            if (i < elementName.size()) { // create a row by count elements, add to matrix
                 String eName = elementName.get(i);
                 Fraction[] row = new Fraction[varCount + 1];
                 int k = 0;
-                for (int j = 0; j < before.size(); j++) {
-                    Fraction factor = new Fraction(countElement(eName, beforeMapList.get(j)));
+                for (int j = 0; j < equation.beforeChemCount(); j++) {
+                    int intFactor = equation.countBeforeElement(eName, j);
+                    Fraction factor = new Fraction(intFactor);
                     row[k] = factor;
                     k++;
                 }
-                for (int j = 0; j < after.size(); j++) {
-                    Fraction factor = new Fraction(countElement(eName, afterMapList.get(j)));
+                for (int j = 0; j < equation.afterChemCount(); j++) {
+                    int intFactor = equation.countAfterElement(eName, j);
+                    Fraction factor = new Fraction(intFactor);
                     row[k] = factor.changeSign();
                     k++;
                 }
                 row[varCount] = new Fraction(0);
                 data[i] = row;
-            } else {
+            } else {    // If not enough element, add some dummy row to matrix
                 Fraction[] dummyRow = new Fraction[varCount + 1];
                 for (int j = 0; j < varCount; j++) {
                     if (j == i) {
@@ -99,35 +106,17 @@ public class MathematicalBalanceEngine implements BalanceEngine {
                         dummyRow[j] = new Fraction(0);
                     }
                 }
-                dummyRow[varCount] = new Fraction(1);
+                dummyRow[varCount] = new Fraction(-1);
                 data[i] = dummyRow;
             }
         }
         return data;
     }
 
-    private int countElement(String name, Map<String, Integer> map) {
-        if (map.containsKey(name)) {
-            return map.get(name);
+    private boolean anyIsZero(Fraction[] fractions) {
+        for (Fraction frac : fractions) {
+            if (frac.isZero()) return true;
         }
-        return 0;
-    }
-
-    private boolean isBalanced(Set<String> nameList
-            , List<Map<String, Integer>> beforeMapList
-            , List<Map<String, Integer>> afterMapList) {
-
-        for (String name : nameList) {
-            int beforeCount = 0;
-            int afterCount = 0;
-            for (Map<String, Integer> map : beforeMapList) {
-                beforeCount += countElement(name, map);
-            }
-            for (Map<String, Integer> map : afterMapList) {
-                afterCount += countElement(name, map);
-            }
-            if (beforeCount != afterCount) return false;
-        }
-        return true;
+        return false;
     }
 }

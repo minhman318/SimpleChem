@@ -1,12 +1,17 @@
 package com.manminh.simplechem.model;
 
+/**
+ * Represents a chemical in an equation
+ * Chemical has a formula and a factor
+ * Ex: "3O2" -> "O2" is formula and 3 is factor
+ */
 public class Chemical {
+
     private Formula mFormula;
-    private int mFactor;
+    private int mFactor = 1;
 
     public Chemical(Formula formula) {
         mFormula = formula;
-        mFactor = 1;
     }
 
     public void setFactor(Integer factor) {

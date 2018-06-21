@@ -1,25 +1,29 @@
-package com.manminh.simplechem.search.engine;
+package com.manminh.simplechem.search;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-
+import java.util.List;
 import android.os.AsyncTask;
 
 
-public class PTHHSearchEngine  extends SearchEngine {
 
-    private static ArrayList<String> search_result = new ArrayList<>();
+public class PTHHSearchEngine  implements SearchEngine {
+
+    private ArrayList<String> data;
 
     public PTHHSearchEngine() {
-
+        data = new ArrayList<>();
     }
 
     /**
      *
-
+     * @param source Website URL
      * @param in Join in element
      * @param out Product
      * @return
