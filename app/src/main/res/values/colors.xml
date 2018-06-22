@@ -7,4 +7,10 @@
     <color name="edittextColor">#807E9E</color>
     <color name="gradient_start">#FF416C</color>
     <color name="gradient_end">#FF4B2B</color>
+    <color name="gradient_start_clicked">#ff8da7</color>
+    <color name="gradient_end_clicked">#ff8772</color>
+    <color name="hint_color">#c5e9eded</color>
+    <color name="done">#26d24b</color>
+    <color name="error">#FF4B2B</color>
+    <color name="info">#E9E9ED</color>
 </resources>

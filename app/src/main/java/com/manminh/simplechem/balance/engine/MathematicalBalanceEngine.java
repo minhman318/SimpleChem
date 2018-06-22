@@ -23,7 +23,7 @@ public class MathematicalBalanceEngine implements IBalanceEngine {
         MatrixResolver resolver = new MatrixResolver(data);
         try {
             Fraction[] factors = resolver.solve(); // may throw ArithmeticException
-            if (anyIsZero(factors)) {
+            if (invalidResult(factors)) {
                 throw new FailedBalanceException(FailedBalanceException.BALANCE_FAILED);
             }
             if (factors.length == equation.chemicalCount()) {
@@ -113,9 +113,9 @@ public class MathematicalBalanceEngine implements IBalanceEngine {
         return data;
     }
 
-    private boolean anyIsZero(Fraction[] fractions) {
+    private boolean invalidResult(Fraction[] fractions) {
         for (Fraction frac : fractions) {
-            if (frac.isZero()) return true;
+            if (frac.lessThanOrEqualZero()) return true;
         }
         return false;
     }

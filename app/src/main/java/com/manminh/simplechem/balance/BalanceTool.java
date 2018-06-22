@@ -8,7 +8,9 @@ import com.manminh.simplechem.balance.engine.IBalanceEngine;
 import com.manminh.simplechem.balance.exception.FailedBalanceException;
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
+import com.manminh.simplechem.data.SQLiteDatabaseManager;
 import com.manminh.simplechem.model.Equation;
+import com.manminh.simplechem.model.SimpleEquation;
 
 /**
  * Balance equation asynchronously
@@ -92,6 +94,14 @@ public class BalanceTool implements Runnable {
         mListener = listener;
         mWorker = new Thread(this); //  pass this since it implemented Runnable
         mWorker.start();
+    }
+
+    public boolean balance(String equation, SQLiteDatabaseManager db) {
+        try {
+            return db.balance(new SimpleEquation(equation));
+        } catch (ParseEquationException e) {
+            return false;
+        }
     }
 
     /**

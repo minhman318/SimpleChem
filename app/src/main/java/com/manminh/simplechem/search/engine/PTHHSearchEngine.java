@@ -1,14 +1,17 @@
 package com.manminh.simplechem.search.engine;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.os.AsyncTask;
 import android.text.Html;
 
@@ -24,21 +27,19 @@ public class PTHHSearchEngine extends SearchEngine {
     }
 
     /**
-     *
-     * @param in Join in element
+     * @param in  Join in element
      * @param out Product
      * @return
      */
-
     @Override
     public ArrayList<String> Search(String in, String out) {
-        String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+in+"&chat_san_pham=" + out;
+        String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia=" + in + "&chat_san_pham=" + out;
         new SearchOperation().execute(url);
         return data;
     }
 
 
-    private class SearchOperation extends AsyncTask<String, Void, Void > {
+    private class SearchOperation extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -46,9 +47,9 @@ public class PTHHSearchEngine extends SearchEngine {
                 Document mWeb = Jsoup.connect(strings[0]).get();
                 Elements formulas = mWeb.select("tr[class=formula-row]");
                 String data_row = "";
-                for(int i=0; i < formulas.size(); i++) {
+                for (int i = 0; i < formulas.size(); i++) {
                     Elements formula = formulas.eq(i);
-                    for (int j =0; j < formula.size(); j++) {
+                    for (int j = 0; j < formula.size(); j++) {
                         Element substance = formula.get(i);
                         String subtext = substance.text().replace(Html.fromHtml("&rarr").toString(), "->");
                         data_row = data_row.concat(subtext);
@@ -61,6 +62,4 @@ public class PTHHSearchEngine extends SearchEngine {
             return null;
         }
     }
-
-
 }

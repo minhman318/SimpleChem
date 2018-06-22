@@ -9,18 +9,18 @@ import android.view.MotionEvent;
 
 import java.util.logging.Handler;
 
-public class SearchButton extends AppCompatButton {
-    private static final int DURATION = 300;
+public class EffectedButton extends AppCompatButton {
+    private static final int DURATION = 250;
 
-    public SearchButton(Context context) {
+    public EffectedButton(Context context) {
         super(context);
     }
 
-    public SearchButton(Context context, AttributeSet attrs) {
+    public EffectedButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SearchButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EffectedButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

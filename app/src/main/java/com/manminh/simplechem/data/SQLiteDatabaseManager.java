@@ -15,13 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteDatabaseManager extends SQLiteOpenHelper {
-
     private static final String DATABASE_NAME = "sqlite_database";
-
     // Equation table
     private static final String EQUATION_TABLE = "equation_table";
     private static final String EQUATION_ID = "_id";
-    private static final String EQUATION_CONTENT = "content";
+    private static final String EQUATION_BEFORE = "before_chem"; // Ex: 2 H2 1 O2
+    private static final String EQUATION_AFTER = "after_chem"; // Ex: 2 H2O
 
     public SQLiteDatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -32,7 +31,8 @@ public class SQLiteDatabaseManager extends SQLiteOpenHelper {
         String script = "create table " +
                 EQUATION_TABLE + " (" +
                 EQUATION_ID + " integer primary key autoincrement, " +
-                EQUATION_CONTENT + " text)";
+                EQUATION_BEFORE + " text," +
+                EQUATION_AFTER + " text)";
         db.execSQL(script);
     }
 
@@ -42,39 +42,31 @@ public class SQLiteDatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insert(String equation) {
+    public void insert(SimpleEquation equation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(EQUATION_CONTENT, equation);
+        values.put(EQUATION_BEFORE, equation.getBeforeDataString());
+        values.put(EQUATION_AFTER, equation.getAfterDataString());
         db.insert(EQUATION_TABLE, null, values);
     }
 
-    public List<String> getAllEquation() {
-        List<String> items = new ArrayList<>();
+    public boolean balance(SimpleEquation key) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from " + EQUATION_TABLE, null);
         res.moveToFirst();
         while (!res.isAfterLast()) {
-            items.add(res.getString(res.getColumnIndex(EQUATION_CONTENT)));
+            String bStr = res.getString(res.getColumnIndex(EQUATION_BEFORE));
+            String aStr = res.getString(res.getColumnIndex(EQUATION_AFTER));
+            SimpleEquation eq = new SimpleEquation(bStr, aStr);
+            if (key.compareAndCopyFactor(eq)) {
+                res.close();
+                db.close();
+                return true;
+            }
             res.moveToNext();
         }
         res.close();
         db.close();
-        return items;
-    }
-
-    public boolean balance(SimpleEquation key) {
-        try {
-            List<String> all = getAllEquation();
-            for (String s : all) {
-                SimpleEquation eq = new SimpleEquation(s);
-                if (key.compareAndCopyFactor(eq)) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (ParseEquationException e) {
-            return false;
-        }
+        return false;
     }
 }

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SimpleChem</string>
+    <string name="before_chem">Chất tham gia:</string>
+    <string name="after_chem">Chất sản phẩm:</string>
+    <string name="search">TÌM KIẾM</string>
+    <string name="balance">CÂN BẰNG</string>
+    <string name="type_equation">Nhập vào một phương trình:</string>
+    <string name="not_check_equation">Chú ý: chương trình không kiểm tra tính đúng đắn của phương trình bạn nhập</string>
 </resources>

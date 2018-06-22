@@ -7,6 +7,7 @@ import android.util.Pair;
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
+import java.net.SocketImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,6 +44,8 @@ public class Equation {
     // is balanced
     private boolean mIsBalanced = false;
 
+    private SimpleEquation mSimpleEquation;
+
     public static Equation parseEquation(String str) throws ParseEquationException {
         return new Equation(new SimpleEquation(str));
     }
@@ -52,6 +55,7 @@ public class Equation {
     }
 
     public Equation(SimpleEquation simpleEquation) throws ParseEquationException {
+        mSimpleEquation = simpleEquation;
         mBfChemicals = new ArrayList<>();
         mAtChemicals = new ArrayList<>();
         try {
@@ -155,6 +159,10 @@ public class Equation {
 
     public int afterChemCount() {
         return mAtChemicals.size();
+    }
+
+    public SimpleEquation getSimpleEquation() {
+        return mSimpleEquation;
     }
 
     public List<String> getAllElementName() {

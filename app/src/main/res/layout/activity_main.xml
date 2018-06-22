@@ -1,70 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        app:cardCornerRadius="10dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/mr_l"
+        android:layout_marginStart="@dimen/mr_l"
+        android:layout_marginTop="@dimen/mr_l"
         app:cardBackgroundColor="@color/colorAccent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
+        app:cardCornerRadius="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="28dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/mr_xxl"
+            android:layout_marginEnd="@dimen/mr_l"
+            android:layout_marginStart="@dimen/mr_l"
+            android:layout_marginTop="@dimen/mr_l"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_chem"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/txt_sz_s" />
+
+            <EditText
+                android:id="@+id/before_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mr_s"
+                android:height="40dp"
+                android:background="@drawable/rounded_edt"
+                android:paddingEnd="@dimen/pd_m"
+                android:paddingStart="@dimen/pd_m"
+                android:hint="H2"
+                android:textColorHint="@color/hint_color"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/txt_sz_m" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chất tham gia:"
-                android:layout_marginTop="14dp"
-                android:textSize="14dp"
-
-                android:textColor="@color/textColor"/>
-            <EditText
-                android:layout_marginTop="9dp"
-                android:background="@drawable/rounded_edt"
-                android:text="Ca"
-                android:textSize="18dp"
-                android:height="40dp"
+                android:layout_marginTop="@dimen/mr_l"
+                android:text="@string/after_chem"
                 android:textColor="@color/textColor"
+                android:textSize="@dimen/txt_sz_s" />
+
+            <EditText
+                android:id="@+id/after_edt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chất sản phẩm:"
-                android:layout_marginTop="21dp"
-                android:textSize="14dp"
-
-                android:textColor="@color/textColor"/>
-            <EditText
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="@dimen/mr_s"
+                android:height="@dimen/standard_height"
                 android:background="@drawable/rounded_edt"
-                android:text="CaO"
-                android:textSize="18dp"
-                android:height="40dp"
+                android:paddingEnd="@dimen/pd_m"
+                android:paddingStart="@dimen/pd_m"
+                android:hint="H2O"
+                android:textColorHint="@color/hint_color"
                 android:textColor="@color/textColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/txt_sz_m" />
 
         </LinearLayout>
-
     </android.support.v7.widget.CardView>
-    <Button
+
+    <com.manminh.simplechem.ui.view.EffectedButton
+        android:id="@+id/search_btn"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/gradient_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="210dp"
-        android:text="TÌM KIẾM"
-        android:textSize="18dp"
+        android:layout_height="@dimen/standard_height"
+        android:layout_marginEnd="@dimen/mr_l"
+        android:layout_marginStart="@dimen/mr_l"
+        android:layout_marginTop="@dimen/reverse_mr1"
+        android:background="@drawable/button"
+        android:text="@string/search"
         android:textColor="@android:color/white"
-        android:layout_height="40dp" />
-</RelativeLayout>
+        android:textSize="@dimen/txt_sz_l" />
+
+</LinearLayout>

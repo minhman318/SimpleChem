@@ -15,6 +15,7 @@ public class SearchTool implements Runnable {
 
     private Thread mWorker;
     public static final SearchTool instance = new SearchTool();
+
     public static SearchTool getInstance() {
         return instance;
     }

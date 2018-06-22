@@ -135,4 +135,8 @@ public class Fraction {
         }
         return dArr;
     }
+
+    public boolean lessThanOrEqualZero() {
+        return ((float) mNumerator / (float) mDenominator) <= 0;
+    }
 }

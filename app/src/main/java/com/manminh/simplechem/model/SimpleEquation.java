@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SimpleEquation {
     private List<Pair<String, Integer>> mBfChemicals;
-    private List<Pair<String, Integer>> mAfChemicals;
+    private List<Pair<String, Integer>> mAtChemicals;
 
     public SimpleEquation(String str) throws ParseEquationException {
         str = str.replace(" ", "");
@@ -25,7 +25,7 @@ public class SimpleEquation {
         chemicals = str.split(regex);
         if (chemicals.length == 2) {
             mBfChemicals = new ArrayList<>();
-            mAfChemicals = new ArrayList<>();
+            mAtChemicals = new ArrayList<>();
 
             String[] before = chemicals[0].split("\\+");
             String[] after = chemicals[1].split("\\+");
@@ -38,10 +38,27 @@ public class SimpleEquation {
                 mBfChemicals.add(extractFactor(s));
             }
             for (String s : after) {
-                mAfChemicals.add(extractFactor(s));
+                mAtChemicals.add(extractFactor(s));
             }
         } else {
             throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
+        }
+    }
+
+    public SimpleEquation(String beforeData, String afterData) {
+        mBfChemicals = new ArrayList<>();
+        mAtChemicals = new ArrayList<>();
+        String[] s1 = beforeData.split(" ");
+        for (int i = 0; i < s1.length * 2; i = i + 2) {
+            String chem = s1[i + 1];
+            int factor = Integer.parseInt(s1[i]);
+            mBfChemicals.add(new Pair<String, Integer>(chem, factor));
+        }
+        String[] s2 = afterData.split(" ");
+        for (int i = 0; i < s2.length * 2; i = i + 2) {
+            String chem = s2[i + 1];
+            int factor = Integer.parseInt(s2[i]);
+            mAtChemicals.add(new Pair<String, Integer>(chem, factor));
         }
     }
 
@@ -63,12 +80,12 @@ public class SimpleEquation {
     }
 
     public List<Pair<String, Integer>> getAfterChemicals() {
-        return mAfChemicals;
+        return mAtChemicals;
     }
 
     public boolean compareAndCopyFactor(SimpleEquation other) {
         int k = 0;
-        int[] factors = new int[mBfChemicals.size() + mAfChemicals.size()];
+        int[] factors = new int[mBfChemicals.size() + mAtChemicals.size()];
         for (int i = 0; i < mBfChemicals.size(); i++) {
             String s1 = mBfChemicals.get(i).first;
             boolean has = false;
@@ -86,11 +103,11 @@ public class SimpleEquation {
                 return false;
             }
         }
-        for (int i = 0; i < mAfChemicals.size(); i++) {
-            String s1 = mAfChemicals.get(i).first;
+        for (int i = 0; i < mAtChemicals.size(); i++) {
+            String s1 = mAtChemicals.get(i).first;
             boolean has = false;
             int factor = 1;
-            for (Pair<String, Integer> p2 : other.mAfChemicals) {
+            for (Pair<String, Integer> p2 : other.mAtChemicals) {
                 String s2 = p2.first;
                 if (s1.equals(s2)) {
                     has = true;
@@ -113,9 +130,9 @@ public class SimpleEquation {
             String f = mBfChemicals.get(i).first;
             mBfChemicals.set(i, new Pair<>(f, factors[k++]));
         }
-        for (int i = 0; i < mAfChemicals.size(); i++) {
-            String f = mAfChemicals.get(i).first;
-            mAfChemicals.set(i, new Pair<>(f, factors[k++]));
+        for (int i = 0; i < mAtChemicals.size(); i++) {
+            String f = mAtChemicals.get(i).first;
+            mAtChemicals.set(i, new Pair<>(f, factors[k++]));
         }
     }
 
@@ -128,12 +145,35 @@ public class SimpleEquation {
         }
         p = mBfChemicals.get(mBfChemicals.size() - 1);
         result += String.valueOf(p.second) + p.first + " -> ";
-        for (int i = 0; i < mAfChemicals.size() - 1; i++) {
-            p = mAfChemicals.get(i);
+        for (int i = 0; i < mAtChemicals.size() - 1; i++) {
+            p = mAtChemicals.get(i);
             result += String.valueOf(p.second) + p.first + " + ";
         }
-        p = mAfChemicals.get(mAfChemicals.size() - 1);
+        p = mAtChemicals.get(mAtChemicals.size() - 1);
         result += String.valueOf(p.second) + p.first + " -> ";
         return result;
+    }
+
+    public String getBeforeDataString() {
+        String res = "";
+        int i;
+        for (i = 0; i < mBfChemicals.size() - 1; i++) {
+            Pair<String, Integer> p = mBfChemicals.get(i);
+            res += p.first + " ";
+        }
+        res += mBfChemicals.get(i).first;
+        return res;
+    }
+
+
+    public String getAfterDataString() {
+        String res = "";
+        int i;
+        for (i = 0; i < mAtChemicals.size() - 1; i++) {
+            Pair<String, Integer> p = mAtChemicals.get(i);
+            res += p.first + " ";
+        }
+        res += mAtChemicals.get(i).first;
+        return res;
     }
 }

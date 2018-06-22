@@ -23,17 +23,17 @@ public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> i
         return new BalanceTool.OnBalanceResultListener() {
             @Override
             public void onBalanceSuccessful(Equation result) {
-                getView().showResult(result.toString());
+                getView().showResult(result.toHtmlSpanned());
             }
 
             @Override
             public void onHasBeenBalanced(Equation result) {
-                getView().showInfo("Nothing to do! This equation has been already balanced.");
+                getView().showInfo("Không cần! Phương trình này đã cân bằng.");
             }
 
             @Override
             public void onBalanceFailed() {
-                getView().showError("Sorry! We cannot balance this equation.");
+                getView().showError("Xin lỗi! Chúng tôi không thể cân bằng phương trình này. Vui lòng kiểm tra lại tính hợp lệ của phương trình.");
             }
 
             @Override
@@ -41,13 +41,13 @@ public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> i
                 String msg;
                 switch (exCode) {
                     case ParseEquationException.INVALID_EQUATION:
-                        msg = "Equation is invalid. Please check the attendance of elements.";
+                        msg = "Phương trình không hợp lệ. Vui lòng kiểm tra sự có mặt của các nguyên tố.";
                         break;
                     case ParseEquationException.INVALID_SYNTAX:
-                        msg = "Equation syntax is invalid. Right syntax is \"A + B -> C + D\"";
+                        msg = "Cú pháp phương trình không hợp hệ. Cú pháp đúng là \"A + B -> C + D\"";
                         break;
                     default:
-                        msg = "Undefined error.";
+                        msg = "Lỗi không xác định.";
                         break;
                 }
                 getView().showError(msg);
@@ -58,19 +58,19 @@ public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> i
                 String msg;
                 switch (exCode) {
                     case ParseFormulaException.EMPTY_STRING:
-                        msg = "Formula cannot be empty.";
+                        msg = "Công thức không thể rỗng.";
                         break;
                     case ParseFormulaException.INVALID_CHARACTER:
-                        msg = "Invalid characters.";
+                        msg = "Chứa kí tự không hợp lệ.";
                         break;
                     case ParseFormulaException.INVALID_ELEMENT:
-                        msg = "Element symbol is wrong or not supported.";
+                        msg = "Nguyên tố không hợp lệ hoặc chưa được hỗ trợ.";
                         break;
                     case ParseFormulaException.INVALID_PARENTHESES:
-                        msg = "It seems that you missing \')\' somewhere.";
+                        msg = "Có vẻ như bạn thiếu dấu \')\' đâu đó.";
                         break;
                     default:
-                        msg = "Undefined error.";
+                        msg = "Lỗi không xác định.";
                         break;
                 }
                 getView().showError(msg);

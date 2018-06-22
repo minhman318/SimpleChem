@@ -9,5 +9,7 @@ public abstract class SearchEngine {
 
     public ArrayList<String> Search(String in, String out) {
         return null;
-    };
+    }
+
+    ;
 }

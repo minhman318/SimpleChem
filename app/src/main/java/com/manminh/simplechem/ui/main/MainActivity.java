@@ -1,4 +1,4 @@
-package com.manminh.simplechem;
+package com.manminh.simplechem.ui.main;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.manminh.simplechem.R;
 import com.manminh.simplechem.model.Equation;
 import com.manminh.simplechem.model.SimpleEquation;
 
