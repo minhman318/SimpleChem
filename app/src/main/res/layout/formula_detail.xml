@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:text="2Ca + O2 -> 2CaO"
+        android:clickable="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/txt_sz_m"
-        android:background="@drawable/button"/>
+        android:background="@drawable/rounded_button"/>
 
     <LinearLayout
 
