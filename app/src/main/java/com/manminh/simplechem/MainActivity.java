@@ -2,14 +2,9 @@ package com.manminh.simplechem;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
-import android.util.Log;
-import android.widget.TextView;
 
-import com.manminh.simplechem.balance.BalanceTool;
-import com.manminh.simplechem.balance.MathematicalBalanceEngine;
-import com.manminh.simplechem.model.Equation;
+import com.manminh.simplechem.search.SearchTool;
+import com.manminh.simplechem.search.engine.PTHHSearchEngine;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,12 +12,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SearchTool mTool = SearchTool.instance;
 
-        TextView tv = findViewById(R.id.test);
-        try {
-            tv.setText((new Equation("2H2 + O2 -> H2(SO4)5")).toHtmlSpanned());
-        } catch (Exception e) {
-
-        }
+        mTool.search(new PTHHSearchEngine(), "h2o", "");
     }
 }
