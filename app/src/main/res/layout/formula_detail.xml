@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="2Ca + O2 -> 2CaO"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/txt_sz_m"
+        android:background="@drawable/button"/>
+
+    <LinearLayout
+
+        android:layout_marginStart="@dimen/pd_l"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_width="match_parent"
+        android:background="@drawable/rounded_tv"
+        android:orientation="vertical"
+        android:padding="@dimen/pd_m"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Điều kiện phản ứng: "
+            android:textSize="@dimen/txt_sz_m"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="ABC"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/pd_l"
+        android:layout_marginStart="@dimen/pd_l"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_width="match_parent"
+        android:background="@drawable/rounded_tv"
+        android:orientation="vertical"
+        android:padding="@dimen/pd_m"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Cách thực hiện: "
+            android:textSize="@dimen/txt_sz_m"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="ABC"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/pd_l"
+        android:layout_marginStart="@dimen/pd_l"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_width="match_parent"
+        android:background="@drawable/rounded_tv"
+        android:orientation="vertical"
+        android:padding="@dimen/pd_m"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Hiện tượng: "
+            android:textSize="@dimen/txt_sz_m"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="ABC"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
