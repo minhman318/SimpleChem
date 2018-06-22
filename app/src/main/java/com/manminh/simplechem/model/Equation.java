@@ -44,63 +44,27 @@ public class Equation {
     private boolean mIsBalanced = false;
 
     public static Equation parseEquation(String str) throws ParseEquationException {
-        return new Equation(str);
+        return new Equation(new SimpleEquation(str));
     }
 
-    /**
-     * Constructor form string equation
-     *
-     * @param str string equation
-     * @throws ParseEquationException if parse equation failed
-     */
-    public Equation(String str) throws ParseEquationException {
-        str = str.replace(" ", "");
-        String regex;
-        if (str.contains("->")) {
-            regex = "->";
-        } else if (str.contains("=")) {
-            regex = "=";
-        } else {
-            throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
-        }
-        String[] chemicals;
-        chemicals = str.split(regex);
-        if (chemicals.length == 2) {
-            String[] beforeStr = chemicals[0].split("\\+");
-            String[] afterStr = chemicals[1].split("\\+");
-            initData(beforeStr, afterStr);
-        } else {
-            throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
-        }
+    public static Equation parseEquation(SimpleEquation simpleEquation) throws ParseEquationException {
+        return new Equation(simpleEquation);
     }
 
-    /**
-     * Initialize attributes of Equation class (this)
-     *
-     * @param beforeStr list of before chemical string
-     * @param afterStr  list of after chemical string
-     * @throws ParseEquationException when parse any formula string failed
-     */
-    private void initData(String[] beforeStr, String[] afterStr)
-            throws ParseEquationException {
-
+    public Equation(SimpleEquation simpleEquation) throws ParseEquationException {
         mBfChemicals = new ArrayList<>();
         mAtChemicals = new ArrayList<>();
-
-        if (beforeStr.length < 1 || afterStr.length < 1) {
-            throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
-        }
         try {
-            for (String formulaStr : beforeStr) {
-                Chemical chemical = buildChemical(formulaStr);
+            for (Pair<String, Integer> p : simpleEquation.getBeforeChemicals()) {
+                Chemical chemical = buildChemical(p);
                 HashMap<String, Integer> logger = new HashMap<>();
                 chemical.getFormula().logElement(logger, 1);
                 mBfElementNameList.addAll(logger.keySet());
                 mBfElementMapList.add(logger);
                 mBfChemicals.add(chemical);
             }
-            for (String formulaStr : afterStr) {
-                Chemical chemical = buildChemical(formulaStr);
+            for (Pair<String, Integer> p : simpleEquation.getAfterChemicals()) {
+                Chemical chemical = buildChemical(p);
                 HashMap<String, Integer> logger = new HashMap<>();
                 chemical.getFormula().logElement(logger, 1);
                 mAtElementNameList.addAll(logger.keySet());
@@ -116,6 +80,13 @@ public class Equation {
         } catch (ParseFormulaException e) {
             throw new ParseEquationException(ParseEquationException.INVALID_EQUATION, e);
         }
+    }
+
+    private Chemical buildChemical(Pair<String, Integer> comp) throws ParseFormulaException {
+        Formula formula = Formula.parseFormula(comp.first);
+        Chemical chemical = new Chemical(formula);
+        chemical.setFactor(comp.second);
+        return chemical;
     }
 
     /**
@@ -138,48 +109,6 @@ public class Equation {
             if (beforeCount != afterCount) return false;
         }
         return true;
-    }
-
-    /**
-     * Create Chemical object form formula string
-     *
-     * @param formulaStr given formula string
-     * @return Chemical object
-     * @throws ParseFormulaException if parse formula failed
-     */
-    private Chemical buildChemical(String formulaStr) throws ParseFormulaException {
-        Pair<String, Integer> temp = extractFactor(formulaStr);
-        Formula formula;
-        Chemical chemical;
-        if (temp != null) {
-            formula = Formula.parseFormula(temp.first);
-            chemical = new Chemical(formula);
-            chemical.setFactor(temp.second);
-        } else {
-            formula = Formula.parseFormula(formulaStr);
-            chemical = new Chemical(formula);
-        }
-        return chemical;
-    }
-
-    /**
-     * If formula string has a factor (Ex: "2H2SO4"), return the pair "H2SO4" and 2
-     *
-     * @param formula formula string
-     * @return Pair: first is right formula string, second is the factor
-     * null if there's no factor in formula string (Ex: "H2O")
-     */
-    private Pair<String, Integer> extractFactor(String formula) {
-        int i = 0;
-        while (Character.isDigit(formula.charAt(i))) {
-            i++;
-        }
-        if (i != 0) {
-            String numStr = formula.substring(0, i);
-            int num = Integer.parseInt(numStr);
-            return new Pair<>(formula.substring(i), num);
-        }
-        return null;
     }
 
     /**

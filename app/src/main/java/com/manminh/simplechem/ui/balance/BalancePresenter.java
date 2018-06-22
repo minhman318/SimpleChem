@@ -1,7 +1,7 @@
 package com.manminh.simplechem.ui.balance;
 
 import com.manminh.simplechem.balance.BalanceTool;
-import com.manminh.simplechem.balance.MathematicalBalanceEngine;
+import com.manminh.simplechem.balance.engine.MathematicalBalanceEngine;
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
 import com.manminh.simplechem.model.Equation;

@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.manminh.simplechem.balance.engine.IBalanceEngine;
 import com.manminh.simplechem.balance.exception.FailedBalanceException;
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;

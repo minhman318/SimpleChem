@@ -1,4 +1,4 @@
-package com.manminh.simplechem.balance;
+package com.manminh.simplechem.balance.engine;
 
 import android.support.annotation.NonNull;
 

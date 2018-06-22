@@ -1,4 +1,4 @@
-package com.manminh.simplechem.balance;
+package com.manminh.simplechem.balance.engine;
 
 import com.manminh.simplechem.balance.exception.FailedBalanceException;
 import com.manminh.simplechem.model.Equation;
