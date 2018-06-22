@@ -12,55 +12,49 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.text.Html;
 
+import com.manminh.simplechem.model.Result;
 import com.manminh.simplechem.search.engine.SearchEngine;
 
 
-public class PTHHSearchEngine extends SearchEngine {
+public class PTHHSearchEngine implements SearchEngine {
 
-    private ArrayList<String> data;
 
-    public PTHHSearchEngine() {
-        data = new ArrayList<>();
-    }
+    public PTHHSearchEngine() { }
 
     /**
      *
-     * @param in Join in element
-     * @param out Product
+     * @param in joined elements
+     * @param out produced elements
      * @return
      */
 
     @Override
-    public ArrayList<String> Search(String in, String out) {
+    public ArrayList<Result> Search(String in, String out) {
+        ArrayList<Result> results = new ArrayList<>();
+
         String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+in+"&chat_san_pham=" + out;
-        new SearchOperation().execute(url);
-        return data;
-    }
 
-
-    private class SearchOperation extends AsyncTask<String, Void, Void > {
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            try {
-                Document mWeb = Jsoup.connect(strings[0]).get();
-                Elements formulas = mWeb.select("tr[class=formula-row]");
-                String data_row = "";
-                for(int i=0; i < formulas.size(); i++) {
-                    Elements formula = formulas.eq(i);
-                    for (int j =0; j < formula.size(); j++) {
-                        Element substance = formula.get(i);
-                        String subtext = substance.text().replace(Html.fromHtml("&rarr").toString(), "->");
-                        data_row = data_row.concat(subtext);
-                    }
+        try {
+            Document mWeb = Jsoup.connect(url).get();
+            Elements formulas = mWeb.select("tr[class=formula-row]");
+            for(int i=0; i < formulas.size(); i++) {
+                ArrayList<String> information = new ArrayList<>();
+                Elements formula = formulas.eq(i);
+                Elements conditionTab = mWeb.select("div[class=tab-content]").eq(i).get(0).children();
+                for(int j = 0; j < conditionTab.size(); j++) {
+                    information.add(conditionTab.get(j).text());
                 }
-                data.add(data_row);
-            } catch (IOException e) {
-                e.printStackTrace();
+                for(int j = conditionTab.size(); j < 3 ; j++) {
+                    information.add("");
+                }
+                String equation = formula.text().replace(Html.fromHtml("&rarr").toString(), "->");
+                results.add(new Result(equation, information.get(0), information.get(1), information.get(2)));
             }
-            return null;
-        }
-    }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
 
 }

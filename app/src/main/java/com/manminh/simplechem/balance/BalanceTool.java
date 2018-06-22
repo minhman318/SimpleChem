@@ -45,7 +45,7 @@ public class BalanceTool implements Runnable {
     private Thread mWorker;
 
     // Only one instance
-    public static final BalanceTool instance = new BalanceTool();
+    private static final BalanceTool instance = new BalanceTool();
 
     // Get static instance
     public static BalanceTool getInstance() {

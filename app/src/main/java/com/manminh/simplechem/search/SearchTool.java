@@ -2,19 +2,20 @@ package com.manminh.simplechem.search;
 
 import android.util.Log;
 
+import com.manminh.simplechem.model.Result;
 import com.manminh.simplechem.search.engine.SearchEngine;
 
 import java.util.ArrayList;
 
 public class SearchTool implements Runnable {
 
-    private ArrayList<String> mResults;
+    private ArrayList<Result> mResults;
     private SearchEngine mEngine;
     private String mIn;
     private String mOut;
 
     private Thread mWorker;
-    public static final SearchTool instance = new SearchTool();
+    private static final SearchTool instance = new SearchTool();
     public static SearchTool getInstance() {
         return instance;
     }
@@ -33,14 +34,14 @@ public class SearchTool implements Runnable {
             mResults = mEngine.Search(mIn, mOut);
             Log.d("SEARCH", "okok" + mResults.size());
         } catch (Exception e) {
-            Log.d("ERROR", "haiz");
+            Log.d("ERROR", "haiz" + e);
         } finally {
             mWorker.interrupt(); // no need this thread any more
             mWorker = null;
         }
     }
 
-    public ArrayList<String> getmResults() {
+    public ArrayList<Result> getmResults() {
         return mResults;
     }
 }

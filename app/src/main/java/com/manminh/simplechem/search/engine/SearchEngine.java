@@ -1,13 +1,14 @@
 package com.manminh.simplechem.search.engine;
 
+import com.manminh.simplechem.model.Result;
+
 import java.util.ArrayList;
 
 /**
  *
  */
-public abstract class SearchEngine {
+public interface SearchEngine {
 
-    public ArrayList<String> Search(String in, String out) {
-        return null;
-    };
+    public ArrayList<Result> Search(String in, String out);
+
 }
