@@ -1,87 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimaryDark">
+    android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <include
+        layout="@layout/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/mr_l"
-        android:layout_marginStart="@dimen/mr_l"
-        android:layout_marginTop="@dimen/mr_l"
-        app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="10dp">
+        android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mr_xxl"
-            android:layout_marginEnd="@dimen/mr_l"
-            android:layout_marginStart="@dimen/mr_l"
-            android:layout_marginTop="@dimen/mr_l"
-            android:orientation="vertical">
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header" />
 
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/before_chem"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_s" />
-
-            <EditText
-                android:id="@+id/before_edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_s"
-                android:height="40dp"
-                android:background="@drawable/rounded_edt"
-                android:paddingEnd="@dimen/pd_m"
-                android:paddingStart="@dimen/pd_m"
-                android:hint="H2"
-                android:textColorHint="@color/hint_color"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_m" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_l"
-                android:text="@string/after_chem"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_s" />
-
-            <EditText
-                android:id="@+id/after_edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_s"
-                android:height="@dimen/standard_height"
-                android:background="@drawable/rounded_edt"
-                android:paddingEnd="@dimen/pd_m"
-                android:paddingStart="@dimen/pd_m"
-                android:hint="H2O"
-                android:textColorHint="@color/hint_color"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_m" />
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <com.manminh.simplechem.ui.view.EffectedButton
-        android:id="@+id/search_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height"
-        android:layout_marginEnd="@dimen/mr_l"
-        android:layout_marginStart="@dimen/mr_l"
-        android:layout_marginTop="@dimen/reverse_mr1"
-        android:background="@drawable/button"
-        android:text="@string/search"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/txt_sz_l" />
-
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

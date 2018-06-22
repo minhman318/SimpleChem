@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -11,84 +10,86 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:background="@drawable/button"
         android:text="2Ca + O2 -> 2CaO"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/txt_sz_m"
-        android:background="@drawable/button"/>
+        android:textSize="@dimen/txt_sz_m" />
 
     <LinearLayout
 
-        android:layout_marginStart="@dimen/pd_l"
-        android:layout_marginEnd="@dimen/pd_l"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_marginStart="@dimen/pd_l"
         android:background="@drawable/rounded_tv"
         android:orientation="vertical"
-        android:padding="@dimen/pd_m"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/pd_m">
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Điều kiện phản ứng: "
-            android:textSize="@dimen/txt_sz_m"
             android:textColor="@android:color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/txt_sz_m" />
+
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="ABC"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/pd_l"
-        android:layout_marginStart="@dimen/pd_l"
-        android:layout_marginEnd="@dimen/pd_l"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_marginStart="@dimen/pd_l"
+        android:layout_marginTop="@dimen/pd_l"
         android:background="@drawable/rounded_tv"
         android:orientation="vertical"
-        android:padding="@dimen/pd_m"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/pd_m">
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Cách thực hiện: "
-            android:textSize="@dimen/txt_sz_m"
             android:textColor="@android:color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/txt_sz_m" />
+
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="ABC"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/pd_l"
-        android:layout_marginStart="@dimen/pd_l"
-        android:layout_marginEnd="@dimen/pd_l"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pd_l"
+        android:layout_marginStart="@dimen/pd_l"
+        android:layout_marginTop="@dimen/pd_l"
         android:background="@drawable/rounded_tv"
         android:orientation="vertical"
-        android:padding="@dimen/pd_m"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/pd_m">
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Hiện tượng: "
-            android:textSize="@dimen/txt_sz_m"
             android:textColor="@android:color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/txt_sz_m" />
+
         <TextView
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="ABC"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
-
-
-
-
 
 
 </LinearLayout>

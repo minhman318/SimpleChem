@@ -29,16 +29,13 @@ public class SearchTool implements Runnable {
 
     private Thread mWorker;
 
-    private static final SearchTool instance = new SearchTool();
-    public static SearchTool getInstance() {
-        return instance;
-    }
-
     public void search(SearchEngine engine, String in, String out, OnSearchResult listener) {
         mEngine = engine;
         mIn = in;
         mOut = out;
         mListener = listener;
+        mWorker = new Thread(this);
+        mWorker.start();
     }
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -58,11 +55,6 @@ public class SearchTool implements Runnable {
         }
     };
 
-    public void search() {
-        mWorker = new Thread(this);
-        mWorker.start();
-    }
-
     @Override
     public void run() {
         Message msg = mHandler.obtainMessage();
@@ -70,9 +62,11 @@ public class SearchTool implements Runnable {
             ArrayList<Result> result = mEngine.Search(mIn, mOut);
             msg.what = SUCESSFUL;
             msg.obj = result;
+            msg.sendToTarget();
         } catch (Exception e) {
             msg.what = ERROR;
             msg.obj = null;
+            msg.sendToTarget();
         } finally {
             mWorker.interrupt(); // no need this thread any more
             mWorker = null;
