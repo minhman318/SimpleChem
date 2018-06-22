@@ -13,19 +13,19 @@ public class Result {
         this.mPhenomenon = mPhenomenon;
     }
 
-    public String getmFormula() {
+    public String getFormula() {
         return mFormula;
     }
 
-    public String getmCondition() {
+    public String getCondition() {
         return mCondition;
     }
 
-    public String getmHowto() {
+    public String getHowto() {
         return mHowto;
     }
 
-    public String getmPhenomenon() {
+    public String getPhenomenon() {
         return mPhenomenon;
     }
 }
