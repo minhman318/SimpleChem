@@ -26,7 +26,6 @@
             android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/before_chem"
@@ -95,8 +94,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/mr_l"
             android:layout_marginStart="@dimen/mr_l"
-            android:layout_marginTop="@dimen/mr_l"
-            android:layout_weight="1">
+            android:layout_marginTop="@dimen/mr_m">
 
         </android.support.v7.widget.RecyclerView>
 

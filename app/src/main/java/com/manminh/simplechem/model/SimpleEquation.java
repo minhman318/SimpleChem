@@ -1,5 +1,6 @@
 package com.manminh.simplechem.model;
 
+import android.text.Html;
 import android.util.Pair;
 
 import com.manminh.simplechem.balance.exception.ParseEquationException;
@@ -11,13 +12,23 @@ public class SimpleEquation {
     private List<Pair<String, Integer>> mBfChemicals;
     private List<Pair<String, Integer>> mAtChemicals;
 
+    private String mRegex;
+
     public SimpleEquation(String str) throws ParseEquationException {
         str = str.replace(" ", "");
         String regex;
         if (str.contains("->")) {
             regex = "->";
+            mRegex = Html.fromHtml("&rarr").toString();
         } else if (str.contains("=")) {
             regex = "=";
+            mRegex = "=";
+        } else if (str.contains(Html.fromHtml("&rarr").toString())) {
+            regex = Html.fromHtml("&rarr").toString();
+            mRegex = regex;
+        } else if (str.contains(Html.fromHtml("&harr").toString())) {
+            regex = Html.fromHtml("&harr").toString();
+            mRegex = regex;
         } else {
             throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
         }
@@ -175,5 +186,9 @@ public class SimpleEquation {
         }
         res += mAtChemicals.get(i).first;
         return res;
+    }
+
+    public String getRegex() {
+        return mRegex;
     }
 }

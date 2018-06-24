@@ -1,9 +1,10 @@
 package com.manminh.simplechem.search.engine;
 
-import com.manminh.simplechem.model.Result;
+import com.manminh.simplechem.search.SearchResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface SearchEngine {
-    ArrayList<Result> Search(String in, String out);
+    ArrayList<SearchResult> Search(String in, String out) throws IOException;
 }

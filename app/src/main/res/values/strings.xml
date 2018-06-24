@@ -6,6 +6,7 @@
     <string name="balance">CÂN BẰNG</string>
     <string name="type_equation">Nhập vào một phương trình:</string>
     <string name="not_check_equation">Chú ý: chương trình không kiểm tra tính đúng đắn của phương trình bạn nhập</string>
+    <string name="nothing_result_item">Không tìm thấy kết quả</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

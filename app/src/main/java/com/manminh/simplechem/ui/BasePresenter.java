@@ -1,4 +1,4 @@
-package com.manminh.simplechem.ui.base;
+package com.manminh.simplechem.ui;
 
 /**
  * Base class of presenters

@@ -3,15 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:background="@color/colorPrimaryDark"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:gravity="bottom"
     android:orientation="vertical"
-    android:gravity="bottom">
 
-    <TextView
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_container">
 
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SimpleChem"
+            android:paddingStart="@dimen/pd_l"
+            android:paddingEnd="@dimen/pd_l"
+            android:paddingTop="@dimen/pd_m"
+            android:paddingBottom="@dimen/pd_m"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/txt_sz_l" />
 
+    </FrameLayout>
 </LinearLayout>

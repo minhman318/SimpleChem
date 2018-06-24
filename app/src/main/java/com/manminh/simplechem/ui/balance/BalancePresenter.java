@@ -1,11 +1,14 @@
 package com.manminh.simplechem.ui.balance;
 
+import android.text.Html;
+import android.text.Spanned;
+
 import com.manminh.simplechem.balance.BalanceTool;
 import com.manminh.simplechem.balance.engine.MathematicalBalanceEngine;
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
 import com.manminh.simplechem.model.Equation;
-import com.manminh.simplechem.ui.base.BasePresenter;
+import com.manminh.simplechem.ui.BasePresenter;
 
 public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> implements IBalancePresenter<V> {
     private BalanceTool mTool;
@@ -23,7 +26,8 @@ public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> i
         return new BalanceTool.OnBalanceResultListener() {
             @Override
             public void onBalanceSuccessful(Equation result) {
-                getView().showResult(result.toHtmlSpanned());
+                Spanned sp = Html.fromHtml(result.toHtmlSpannedStr());
+                getView().showResult(sp);
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.manminh.simplechem.ui.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,26 +17,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.manminh.simplechem.R;
-import com.manminh.simplechem.model.Result;
-import com.manminh.simplechem.search.SearchTool;
-import com.manminh.simplechem.search.engine.PTHHSearchEngine;
+import com.manminh.simplechem.search.Detail;
+import com.manminh.simplechem.ui.details.DetailsActivity;
+import com.manminh.simplechem.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements SearchTool.OnSearchResult {
+public class SearchFragment extends Fragment implements ISearchView, ResultAdapter.OnItemSelectedListener {
     private EditText mBeforeEdt;
     private EditText mAfterEdt;
     private Button mSearchBtn;
-    private SearchTool mTool;
     private ResultAdapter mAdapter;
     private RecyclerView mRcView;
     private ProgressBar mPgBar;
-
+    private SearchPresenter<SearchFragment> mPresenter;
     private OnFragmentInteractionListener mListener;
 
     public SearchFragment() {
-
     }
 
     public static SearchFragment newInstance() {
@@ -63,21 +62,26 @@ public class SearchFragment extends Fragment implements SearchTool.OnSearchResul
         mRcView = view.findViewById(R.id.recycler_view);
         mPgBar = view.findViewById(R.id.pg_bar);
 
-        mTool = new SearchTool();
-
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mRcView.setVisibility(View.INVISIBLE);
-                mPgBar.setVisibility(View.VISIBLE);
                 String before = mBeforeEdt.getText().toString();
                 String after = mAfterEdt.getText().toString();
-                mTool.search(new PTHHSearchEngine(), before, after, SearchFragment.this);
+                if (before.equals("") && after.equals("")) {
+                    hideLoading();
+                    showList();
+                    showInfo("Vui lòng nhập ít nhất một chất.");
+                } else {
+                    mPresenter.search(before, after, 5);
+                }
             }
         });
 
-        mRcView.setVisibility(View.INVISIBLE);
-        mPgBar.setVisibility(View.INVISIBLE);
+        hideLoading();
+        hideList();
+
+        mPresenter = new SearchPresenter<>();
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -95,6 +99,7 @@ public class SearchFragment extends Fragment implements SearchTool.OnSearchResul
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mPresenter.detachView();
     }
 
     public interface OnFragmentInteractionListener {
@@ -102,20 +107,55 @@ public class SearchFragment extends Fragment implements SearchTool.OnSearchResul
     }
 
     @Override
-    public void onResult(List<Result> results) {
-        mRcView.setVisibility(View.VISIBLE);
+    public void showLoading() {
+        mPgBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
         mPgBar.setVisibility(View.INVISIBLE);
-        List<String> equation = new ArrayList<>();
-        for (Result e : results) {
-            equation.add(e.getFormula());
-        }
-        mAdapter = new ResultAdapter(equation);
+    }
+
+    @Override
+    public void showList() {
+        mRcView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideList() {
+        mRcView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void setUpItems(List<String> equations) {
+        mAdapter = new ResultAdapter(equations, this);
         mRcView.setAdapter(mAdapter);
         mRcView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
     }
 
     @Override
-    public void onError() {
+    public void addMoreItems(List<String> equations) {
+        mAdapter.addMore(equations);
+        mAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void showInfo(String info) {
+        mAdapter = new ResultAdapter(info);
+        mRcView.setAdapter(mAdapter);
+        mRcView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+    }
+
+    @Override
+    public void onSelected(int pos) {
+        mPresenter.onSelected(pos);
+    }
+
+    @Override
+    public void seeDetails(String equation, ArrayList<Detail> details) {
+        Intent intent = new Intent(this.getActivity(), DetailsActivity.class);
+        intent.putExtra(MainActivity.EQUATION_NAME_SEND_CODE, equation);
+        intent.putParcelableArrayListExtra(MainActivity.DETAILS_SEND_CODE, details);
+        this.getActivity().startActivity(intent);
     }
 }

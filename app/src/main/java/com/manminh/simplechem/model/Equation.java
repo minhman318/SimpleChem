@@ -44,6 +44,8 @@ public class Equation {
     // is balanced
     private boolean mIsBalanced = false;
 
+    private String mRegex;
+
     private SimpleEquation mSimpleEquation;
 
     public static Equation parseEquation(String str) throws ParseEquationException {
@@ -58,6 +60,7 @@ public class Equation {
         mSimpleEquation = simpleEquation;
         mBfChemicals = new ArrayList<>();
         mAtChemicals = new ArrayList<>();
+
         try {
             for (Pair<String, Integer> p : simpleEquation.getBeforeChemicals()) {
                 Chemical chemical = buildChemical(p);
@@ -188,7 +191,10 @@ public class Equation {
         for (int i = 0; i < mBfChemicals.size() - 1; i++) {
             result += mBfChemicals.get(i).toString() + " + ";
         }
-        result += mBfChemicals.get(mBfChemicals.size() - 1).toString() + " -> ";
+        result += mBfChemicals.get(mBfChemicals.size() - 1).toString()
+                + " "
+                + mSimpleEquation.getRegex()
+                + " ";
         for (int i = 0; i < mAtChemicals.size() - 1; i++) {
             result += mAtChemicals.get(i).toString() + " + ";
         }
@@ -196,16 +202,19 @@ public class Equation {
         return result;
     }
 
-    public Spanned toHtmlSpanned() {
+    public String toHtmlSpannedStr() {
         String result = "";
         for (int i = 0; i < mBfChemicals.size() - 1; i++) {
             result += mBfChemicals.get(i).toHtmlString() + " + ";
         }
-        result += mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString() + Html.fromHtml("&rarr");
+        result += mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString()
+                + " "
+                + mSimpleEquation.getRegex()
+                + " ";
         for (int i = 0; i < mAtChemicals.size() - 1; i++) {
             result += mAtChemicals.get(i).toHtmlString() + " + ";
         }
         result += mAtChemicals.get(mAtChemicals.size() - 1).toHtmlString();
-        return Html.fromHtml(result);
+        return result;
     }
 }

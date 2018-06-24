@@ -3,15 +3,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_item_search"
-            android:icon="@drawable/ic_done_24dp"
+            android:icon="@drawable/ic_search_24dp"
             android:title="Tìm kiếm phương trình" />
         <item
             android:id="@+id/nav_item_balance"
-            android:icon="@drawable/ic_done_24dp"
-            android:title="Cân bằng" />
+            android:icon="@drawable/ic_equal_24dp"
+            android:title="Cân bằng phương trình" />
         <item
             android:id="@+id/nav_item_ddh"
-            android:icon="@drawable/ic_done_24dp"
+            android:icon="@drawable/ic_ddh_24dp"
             android:title="Dãy điện hóa" />
+        <item
+            android:id="@+id/nav_item_dhd"
+            android:icon="@drawable/ic_dhd_24dp"
+            android:title="Dãy hoạt động hóa học kim loại" />
+        <item
+            android:id="@+id/nav_item_soluble_table"
+            android:icon="@drawable/ic_soluble_table_24dp"
+            android:title="Bảng tính tan" />
     </group>
 </menu>

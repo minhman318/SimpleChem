@@ -3,11 +3,10 @@ package com.manminh.simplechem.search;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
-import com.manminh.simplechem.model.Result;
 import com.manminh.simplechem.search.engine.SearchEngine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class SearchTool implements Runnable {
     private static final int SUCESSFUL = 1;
 
     public interface OnSearchResult {
-        void onResult(List<Result> results);
+        void onResult(List<SearchResult> searchResults);
 
         void onError();
     }
@@ -43,8 +42,8 @@ public class SearchTool implements Runnable {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SUCESSFUL:
-                    ArrayList<Result> results = (ArrayList<Result>) msg.obj;
-                    mListener.onResult(results);
+                    ArrayList<SearchResult> searchResults = (ArrayList<SearchResult>) msg.obj;
+                    mListener.onResult(searchResults);
                     break;
                 case ERROR:
                     mListener.onError();
@@ -59,11 +58,11 @@ public class SearchTool implements Runnable {
     public void run() {
         Message msg = mHandler.obtainMessage();
         try {
-            ArrayList<Result> result = mEngine.Search(mIn, mOut);
+            ArrayList<SearchResult> searchResult = mEngine.Search(mIn, mOut);
             msg.what = SUCESSFUL;
-            msg.obj = result;
+            msg.obj = searchResult;
             msg.sendToTarget();
-        } catch (Exception e) {
+        } catch (IOException e) {
             msg.what = ERROR;
             msg.obj = null;
             msg.sendToTarget();
