@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
     <FrameLayout
@@ -51,7 +50,8 @@
             android:paddingEnd="@dimen/pd_m"
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/txt_sz_m" />
+            android:textSize="@dimen/txt_sz_l"
+            android:textStyle="bold" />
 
     </FrameLayout>
 

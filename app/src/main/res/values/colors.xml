@@ -13,4 +13,5 @@
     <color name="done">#26d24b</color>
     <color name="error">#FF4B2B</color>
     <color name="info">#E9E9ED</color>
+    <color name="progess_bar_color">#c6dfdfdf</color>
 </resources>

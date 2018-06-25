@@ -22,4 +22,8 @@ public interface ISearchView extends IView {
     void showInfo(String info);
 
     void seeDetails(String equation, ArrayList<Detail> info);
+
+    void toMoreButton();
+
+    void toSearchButton();
 }

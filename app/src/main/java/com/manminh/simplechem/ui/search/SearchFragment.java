@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,26 +27,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment implements ISearchView, ResultAdapter.OnItemSelectedListener {
+    private static final int LIMIT_RESULT = 10;
     private EditText mBeforeEdt;
     private EditText mAfterEdt;
     private Button mSearchBtn;
     private ResultAdapter mAdapter;
     private RecyclerView mRcView;
     private ProgressBar mPgBar;
+
     private SearchPresenter<SearchFragment> mPresenter;
     private OnFragmentInteractionListener mListener;
+
+    private volatile boolean mProcessing = false;
+    private volatile boolean mShowMoreMode = false;
 
     public SearchFragment() {
     }
 
     public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new SearchFragment();
     }
 
     @Override
@@ -62,20 +63,8 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
         mRcView = view.findViewById(R.id.recycler_view);
         mPgBar = view.findViewById(R.id.pg_bar);
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String before = mBeforeEdt.getText().toString();
-                String after = mAfterEdt.getText().toString();
-                if (before.equals("") && after.equals("")) {
-                    hideLoading();
-                    showList();
-                    showInfo("Vui lòng nhập ít nhất một chất.");
-                } else {
-                    mPresenter.search(before, after, 5);
-                }
-            }
-        });
+        setUpSearchButton();
+        setUpEditText();
 
         hideLoading();
         hideList();
@@ -100,6 +89,64 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
         super.onDetach();
         mListener = null;
         mPresenter.detachView();
+    }
+
+    private void setUpSearchButton() {
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getActivity() != null) {
+                    ((MainActivity) getActivity()).hideSoftKeyboard();
+                }
+                if (mProcessing) return;
+                mProcessing = true;
+                String before = mBeforeEdt.getText().toString();
+                String after = mAfterEdt.getText().toString();
+
+                if (before.equals("") && after.equals("")) {
+                    hideLoading();
+                    showList();
+                    showInfo("Vui lòng nhập ít nhất một chất.");
+                } else {
+                    if (!mShowMoreMode) {
+                        mPresenter.search(before, after, LIMIT_RESULT);
+                    } else {
+                        mPresenter.searchMore(LIMIT_RESULT);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setUpEditText() {
+        mAfterEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                toSearchButton();
+            }
+        });
+        mBeforeEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                toSearchButton();
+            }
+        });
     }
 
     public interface OnFragmentInteractionListener {
@@ -131,12 +178,14 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
         mAdapter = new ResultAdapter(equations, this);
         mRcView.setAdapter(mAdapter);
         mRcView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        mProcessing = false;
     }
 
     @Override
     public void addMoreItems(List<String> equations) {
         mAdapter.addMore(equations);
         mAdapter.notifyDataSetChanged();
+        mProcessing = false;
     }
 
     @Override
@@ -144,11 +193,14 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
         mAdapter = new ResultAdapter(info);
         mRcView.setAdapter(mAdapter);
         mRcView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        mProcessing = false;
     }
 
     @Override
     public void onSelected(int pos) {
-        mPresenter.onSelected(pos);
+        if (!mProcessing) {
+            mPresenter.onSelected(pos);
+        }
     }
 
     @Override
@@ -157,5 +209,17 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
         intent.putExtra(MainActivity.EQUATION_NAME_SEND_CODE, equation);
         intent.putParcelableArrayListExtra(MainActivity.DETAILS_SEND_CODE, details);
         this.getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void toMoreButton() {
+        mSearchBtn.setText("Hiển thị thêm");
+        mShowMoreMode = true;
+    }
+
+    @Override
+    public void toSearchButton() {
+        mSearchBtn.setText("Tìm Kiếm");
+        mShowMoreMode = false;
     }
 }

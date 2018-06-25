@@ -6,5 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface SearchEngine {
-    ArrayList<SearchResult> Search(String in, String out) throws IOException;
+    ArrayList<SearchResult> Search(String in, String out, int page) throws IOException;
+
+    int getNumberItemsPerPage();
 }

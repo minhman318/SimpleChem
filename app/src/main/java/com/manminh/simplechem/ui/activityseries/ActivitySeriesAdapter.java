@@ -53,7 +53,7 @@ public class ActivitySeriesAdapter extends RecyclerView.Adapter<ActivitySeriesAd
             super(itemView);
             mElementTv = itemView.findViewById(R.id.element_tv);
             mItem = itemView.findViewById(R.id.activity_series_item);
-            mItem.setBackground(mContext.getDrawable(R.drawable.rounded_tv));
+            mItem.setBackground(mContext.getDrawable(R.drawable.round_dark_container));
         }
 
         public void bind(final int pos) {

@@ -12,12 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.manminh.simplechem.ui.activityseries.ActivitySeriesFragment;
 import com.manminh.simplechem.ui.electseries.ElectSeriesFragment;
 import com.manminh.simplechem.R;
 import com.manminh.simplechem.ui.search.SearchFragment;
 import com.manminh.simplechem.ui.balance.BalanceFragment;
+
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class MainActivity extends AppCompatActivity implements
         SearchFragment.OnFragmentInteractionListener,
@@ -34,16 +38,14 @@ public class MainActivity extends AppCompatActivity implements
     private Fragment mActivitySeriesFragment;
     private FragmentManager mFragmentManager;
 
-    private Toolbar mToolBar;
     private DrawerLayout mDrawer;
-    private NavigationView mNavView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolBar = findViewById(R.id.toolbar_main);
+        Toolbar mToolBar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolBar);
 
         if (getSupportActionBar() != null) {
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements
         mActivitySeriesFragment = ActivitySeriesFragment.newInstance();
         mFragmentManager = getSupportFragmentManager();
 
-        mNavView = findViewById(R.id.nav_view);
+        NavigationView mNavView = findViewById(R.id.nav_view);
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -94,6 +96,17 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+    }
 
+    public void hideSoftKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

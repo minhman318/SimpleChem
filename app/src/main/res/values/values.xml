@@ -5,18 +5,18 @@
     <dimen name="mr_l">16dp</dimen>
     <dimen name="mr_xl">32dp</dimen>
     <dimen name="mr_xxl">48dp</dimen>
+    <dimen name="mr_gl">56dp</dimen>
     <dimen name="reverse_mr1">-20dp</dimen>
-
     <dimen name="pd_s">4dp</dimen>
     <dimen name="pd_m">8dp</dimen>
     <dimen name="pd_l">16dp</dimen>
     <dimen name="pd_xl">32dp</dimen>
     <dimen name="pd_xxl">48dp</dimen>
-
-    <dimen name="txt_sz_s">12sp</dimen>
-    <dimen name="txt_sz_m">18sp</dimen>
-    <dimen name="txt_sz_l">20sp</dimen>
-
+    <dimen name="txt_sz_s">13sp</dimen>
+    <dimen name="txt_sz_m">16sp</dimen>
+    <dimen name="txt_sz_l">18sp</dimen>
+    <dimen name="txt_sz_xl">24sp</dimen>
     <dimen name="standard_height">40dp</dimen>
-    <dimen name="tag_width">20dp</dimen>
+    <dimen name="tag_width">10dp</dimen>
+    <dimen name="corner_radius">4dp</dimen>
 </resources>

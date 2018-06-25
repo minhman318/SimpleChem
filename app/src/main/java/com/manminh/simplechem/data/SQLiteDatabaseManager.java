@@ -3,16 +3,10 @@ package com.manminh.simplechem.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Pair;
 
-import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.model.SimpleEquation;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SQLiteDatabaseManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "sqlite_database";

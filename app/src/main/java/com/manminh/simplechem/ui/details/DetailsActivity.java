@@ -18,19 +18,16 @@ import com.manminh.simplechem.ui.main.MainActivity;
 import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
-    private TextView mEquationTv;
-    private RecyclerView mRcView;
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        mEquationTv = findViewById(R.id.equation_tv);
-        mRcView = findViewById(R.id.detail_rc_view);
+        TextView mEquationTv = findViewById(R.id.equation_tv);
+        RecyclerView mRcView = findViewById(R.id.detail_rc_view);
 
-        mToolbar = findViewById(R.id.detail_toolbar);
+        Toolbar mToolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(mToolbar);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

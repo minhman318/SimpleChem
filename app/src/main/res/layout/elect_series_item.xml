@@ -3,7 +3,7 @@
     android:layout_width="70dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/rounded_tv"
+    android:background="@drawable/round_dark_container"
     android:layout_marginTop="@dimen/mr_s"
     android:layout_marginBottom="@dimen/mr_s"
     android:layout_marginEnd="@dimen/mr_s">

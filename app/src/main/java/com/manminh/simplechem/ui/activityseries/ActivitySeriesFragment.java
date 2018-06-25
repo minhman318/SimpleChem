@@ -21,7 +21,6 @@ import java.util.List;
 
 public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAdapter.OnItemSelectedListener {
     private OnFragmentInteractionListener mListener;
-    private RecyclerView mRcView;
     private ActivitySeriesAdapter mAdapter;
     private TextView mSymbolTv;
     private RecyclerView mInfoRcView;
@@ -33,13 +32,7 @@ public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAd
     }
 
     public static ActivitySeriesFragment newInstance() {
-        ActivitySeriesFragment fragment = new ActivitySeriesFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new ActivitySeriesFragment();
     }
 
     @Override
@@ -51,19 +44,13 @@ public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRcView = view.findViewById(R.id.activity_series_rc_view);
+        RecyclerView mRcView = view.findViewById(R.id.activity_series_rc_view);
         mSymbolTv = view.findViewById(R.id.symbol_tv);
         mInfoRcView = view.findViewById(R.id.activity_series__info_rc_view);
         mInfoRcView.setVisibility(View.GONE);
         mData = XmlDataManager.getActivitySeries(this.getActivity());
         mAdapter = new ActivitySeriesAdapter(mData, this, this.getActivity());
         mRcView.setAdapter(mAdapter);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -84,7 +71,6 @@ public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAd
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

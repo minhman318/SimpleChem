@@ -1,105 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/mr_l"
-        android:layout_marginStart="@dimen/mr_l"
-        android:layout_marginTop="@dimen/mr_l"
-        app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="10dp">
+        app:elevation="0dp">
 
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/mr_xxl"
-            android:layout_marginEnd="@dimen/mr_l"
-            android:layout_marginStart="@dimen/mr_l"
-            android:layout_marginTop="@dimen/mr_l"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/before_chem"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_s" />
+            <include
+                layout="@layout/search_panel"
+                app:layout_collapseMode="parallax" />
 
-            <EditText
-                android:id="@+id/before_edt"
+            <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_s"
-                android:height="40dp"
-                android:background="@drawable/rounded_edt"
-                android:hint="H2"
-                android:paddingEnd="@dimen/pd_m"
-                android:paddingStart="@dimen/pd_m"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/hint_color"
-                android:textSize="@dimen/txt_sz_m" />
+                android:layout_height="@dimen/standard_height"
+                android:layout_gravity="bottom"
+                app:layout_collapseMode="pin">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_l"
-                android:text="@string/after_chem"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/txt_sz_s" />
+                <com.manminh.simplechem.ui.view.EffectedButton
+                    android:id="@+id/search_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/standard_height"
+                    android:layout_marginEnd="@dimen/mr_l"
+                    android:layout_marginStart="@dimen/mr_l"
+                    android:background="@drawable/button"
+                    android:text="@string/search"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/txt_sz_l" />
 
-            <EditText
-                android:id="@+id/after_edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mr_s"
-                android:height="@dimen/standard_height"
-                android:background="@drawable/rounded_edt"
-                android:hint="H2O"
-                android:paddingEnd="@dimen/pd_m"
-                android:paddingStart="@dimen/pd_m"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/hint_color"
-                android:textSize="@dimen/txt_sz_m" />
+            </android.support.v7.widget.Toolbar>
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
 
-    <com.manminh.simplechem.ui.view.EffectedButton
-        android:id="@+id/search_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/standard_height"
-        android:layout_marginEnd="@dimen/mr_l"
-        android:layout_marginStart="@dimen/mr_l"
-        android:layout_marginTop="@dimen/reverse_mr1"
-        android:background="@drawable/button"
-        android:text="@string/search"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/txt_sz_l" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/mr_s"
             android:layout_marginEnd="@dimen/mr_l"
             android:layout_marginStart="@dimen/mr_l"
-            android:layout_marginTop="@dimen/mr_m">
+            android:layout_marginTop="@dimen/mr_s">
 
         </android.support.v7.widget.RecyclerView>
 
         <ProgressBar
             android:id="@+id/pg_bar"
+            android:theme="@style/LightAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -107,4 +70,4 @@
 
     </FrameLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

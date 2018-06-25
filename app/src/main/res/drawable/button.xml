@@ -7,8 +7,8 @@
                 android:endColor="@color/gradient_end"
                 android:angle="180" />
             <corners
-                android:bottomLeftRadius="10dp"
-                android:bottomRightRadius="10dp" />
+                android:bottomLeftRadius="@dimen/corner_radius"
+                android:bottomRightRadius="@dimen/corner_radius" />
         </shape>
     </item>
     <item>
@@ -18,8 +18,8 @@
                 android:endColor="@color/gradient_end_clicked"
                 android:angle="180" />
             <corners
-                android:bottomLeftRadius="10dp"
-                android:bottomRightRadius="10dp" />
+                android:bottomLeftRadius="@dimen/corner_radius"
+                android:bottomRightRadius="@dimen/corner_radius" />
         </shape>
     </item>
 </transition>

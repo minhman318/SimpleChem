@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.manminh.simplechem.R;
-import com.manminh.simplechem.balance.exception.ParseEquationException;
-import com.manminh.simplechem.model.Equation;
 
 import java.util.ArrayList;
 import java.util.List;

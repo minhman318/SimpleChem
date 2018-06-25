@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import android.text.Html;
+import android.util.Log;
 
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.model.Equation;
@@ -15,46 +15,56 @@ import com.manminh.simplechem.search.SearchResult;
 
 
 public class PTHHSearchEngine implements SearchEngine {
-    private static final String URL = "https://phuongtrinhhoahoc.com";
+    public static final String URL = "https://phuongtrinhhoahoc.com";
+    public static final int ITEMS_PER_PAGE = 2;
 
     @Override
-    public ArrayList<SearchResult> Search(String in, String out) throws IOException {
+    public ArrayList<SearchResult> Search(String in, String out, int page) throws IOException {
         ArrayList<SearchResult> searchResults = new ArrayList<>();
-        String url = buildQueryStr(in, out);
+        String url = buildQueryStr(in, out, page);
         Document mWeb = Jsoup.connect(url).get();
-        Elements formulas = mWeb.select("tr[class=formula-row]");
-        for (int i = 0; i < formulas.size(); i++) {
-            ArrayList<String> information = new ArrayList<>();
-            Elements formula = formulas.eq(i);
-            Elements conditionTab = mWeb.select("div[class=tab-content]").eq(i).get(0).children();
-            for (int j = 0; j < conditionTab.size(); j++) {
-                information.add(conditionTab.get(j).text());
-            }
-            for (int j = conditionTab.size(); j < 3; j++) {
-                information.add("");
-            }
+        Elements equations = mWeb.select("tr[class=formula-row]");
 
+        for (int i = 0; i < equations.size(); i++) {
+            Elements formula = equations.eq(i);
             String eqStr = formula.text();
+            Log.d("EQ", "page " + String.valueOf(page) + " eq: " + eqStr);
             try {
-                Equation equation = Equation.parseEquation(eqStr);
-                eqStr = equation.toHtmlSpannedStr();
-                equation = null;
+                Equation eq = Equation.parseEquation(eqStr);
+                eqStr = eq.toHtmlSpannedStr();
+                eq = null;
             } catch (ParseEquationException e) {
             }
 
-            SearchResult result = new SearchResult.Builder(eqStr)
-                    .addDetail("Điều kiện", upperFirst(information.get(0)))
-                    .addDetail("Cách thực hiện", upperFirst(information.get(1)))
-                    .addDetail("Hiện tượng", upperFirst(information.get(2)))
-                    .build();
+            Elements conditionTab = mWeb.select("div[class=tab-content]").eq(i).get(0).children();
+            SearchResult.Builder builder = new SearchResult.Builder(eqStr);
 
-            searchResults.add(result);
+            for (int j = 0; j < conditionTab.size(); j++) {
+                String idStr = conditionTab.get(j).id();
+                if (idStr.contains("condition")) {
+                    String content = conditionTab.get(j).text();
+                    if (!content.equals("")) {
+                        builder.addDetail("Điều kiện", upperFirst(content));
+                    }
+                } else if (idStr.contains("phenomenon")) {
+                    String content = conditionTab.get(j).text();
+                    if (!content.equals("")) {
+                        builder.addDetail("Hiện tượng", upperFirst(content));
+                    }
+                } else if (idStr.contains("how-to")) {
+                    String content = conditionTab.get(j).text();
+                    if (!content.equals("")) {
+                        builder.addDetail("Cách thực hiện", upperFirst(content));
+                    }
+                }
+            }
+            searchResults.add(builder.build());
         }
         return searchResults;
     }
 
-    public String buildQueryStr(String in, String out) {
-        return URL + "/?chat_tham_gia=" + in + "&chat_san_pham=" + out;
+    public String buildQueryStr(String in, String out, int page) {
+        return URL + "/?chat_tham_gia=" + in + "&chat_san_pham=" + out + "&page=" + String.valueOf(page);
     }
 
     private String upperFirst(String str) {
@@ -65,5 +75,10 @@ public class PTHHSearchEngine implements SearchEngine {
             return buider.toString();
         }
         return str;
+    }
+
+    @Override
+    public int getNumberItemsPerPage() {
+        return ITEMS_PER_PAGE;
     }
 }

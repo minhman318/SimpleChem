@@ -1,7 +1,6 @@
 package com.manminh.simplechem.search;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchResult {
     private String mEquation;

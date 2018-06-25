@@ -17,11 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.manminh.simplechem.R;
+import com.manminh.simplechem.ui.main.MainActivity;
 
 public class BalanceFragment extends Fragment implements IBalanceView {
     private static final int DURATION = 300;
 
-    private Button mBalanceBtn;
     private EditText mEquationEdt;
     private ImageView mStateImg;
     private TextView mInfoTv;
@@ -36,13 +36,7 @@ public class BalanceFragment extends Fragment implements IBalanceView {
     }
 
     public static BalanceFragment newInstance() {
-        BalanceFragment fragment = new BalanceFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new BalanceFragment();
     }
 
     @Override
@@ -53,7 +47,7 @@ public class BalanceFragment extends Fragment implements IBalanceView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mBalanceBtn = view.findViewById(R.id.balance_btn);
+        Button mBalanceBtn = view.findViewById(R.id.balance_btn);
         mEquationEdt = view.findViewById(R.id.equation_edt);
         mStateImg = view.findViewById(R.id.icon_img);
         mInfoTv = view.findViewById(R.id.info_tv);
@@ -65,6 +59,9 @@ public class BalanceFragment extends Fragment implements IBalanceView {
         mBalanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (getActivity() != null) {
+                    ((MainActivity) getActivity()).hideSoftKeyboard();
+                }
                 String eqStr = mEquationEdt.getText().toString();
                 if (eqStr.equals("")) {
                     showError("Vui lòng nhập một phương trình hóa học");

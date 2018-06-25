@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/colorAccent"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="@dimen/corner_radius">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
         <View
             android:layout_width="@dimen/tag_width"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_ribbon"
+            android:background="@drawable/tag"
             android:clickable="false" />
 
         <TextView

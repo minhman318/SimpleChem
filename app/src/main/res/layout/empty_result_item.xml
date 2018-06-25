@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/mr_m"
     app:cardBackgroundColor="@color/colorAccent"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="@dimen/corner_radius">
 
     <TextView
         android:id="@+id/result_item_value"
@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/mr_m"
+        android:layout_marginEnd="@dimen/mr_m"
         android:padding="@dimen/pd_m"
         android:text="@string/nothing_result_item"
         android:textColor="@android:color/white"

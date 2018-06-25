@@ -1,7 +1,6 @@
 package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
-import android.text.Html;
 
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
@@ -102,7 +101,7 @@ public class CompoundFormula extends Formula {
                         .append(")")
                         .append("<sub><small>")
                         .append(String.valueOf(f.getSubscript()))
-                        .append("</small></sub");
+                        .append("</small></sub>");
             } else {
                 strBuilder.append(f.toHtmlString());
             }

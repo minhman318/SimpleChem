@@ -16,20 +16,12 @@ import com.manminh.simplechem.data.XmlDataManager;
 
 public class ElectSeriesFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private RecyclerView mRcView;
-    private ElectSeriesAdapter mAdapter;
 
     public ElectSeriesFragment() {
     }
 
     public static ElectSeriesFragment newInstance() {
-        ElectSeriesFragment fragment = new ElectSeriesFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return new ElectSeriesFragment();
     }
 
     @Override
@@ -41,15 +33,9 @@ public class ElectSeriesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRcView = view.findViewById(R.id.ddh_rc_view);
-        mAdapter = new ElectSeriesAdapter(XmlDataManager.getElectrochemicalSeries(this.getActivity()));
+        RecyclerView mRcView = view.findViewById(R.id.ddh_rc_view);
+        ElectSeriesAdapter mAdapter = new ElectSeriesAdapter(XmlDataManager.getElectrochemicalSeries(this.getActivity()));
         mRcView.setAdapter(mAdapter);
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override

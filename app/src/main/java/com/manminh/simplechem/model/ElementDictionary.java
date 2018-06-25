@@ -1,11 +1,5 @@
 package com.manminh.simplechem.model;
 
-import android.content.Context;
-
-import com.manminh.simplechem.data.XmlDataManager;
-
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,9 +17,7 @@ public class ElementDictionary {
 
     // check if an given element name is supported or not
     public static boolean isElement(String name) {
-        if (mElementNameRef != null) {
-            return name.length() <= MAX_ELEMENT_STR_LENGTH && mElementNameRef.contains(name);
-        }
-        return false;
+        return mElementNameRef != null && name.length()
+                <= MAX_ELEMENT_STR_LENGTH && mElementNameRef.contains(name);
     }
 }

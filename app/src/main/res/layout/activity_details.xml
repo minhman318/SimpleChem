@@ -17,9 +17,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/mr_xl"
-        android:layout_marginEnd="@dimen/mr_xl"
-        android:background="@drawable/button"
+        android:layout_marginStart="@dimen/mr_l"
+        android:layout_marginEnd="@dimen/mr_l"
+        android:background="@drawable/round_gradient_container"
         android:textColor="@android:color/white">
 
         <TextView
@@ -41,7 +41,8 @@
         android:layout_weight="1"
         android:layout_marginStart="@dimen/mr_l"
         android:layout_marginEnd="@dimen/mr_l"
-        android:layout_marginTop="@dimen/mr_l">
+        android:layout_marginTop="@dimen/mr_m"
+        android:layout_marginBottom="@dimen/mr_m">
 
     </android.support.v7.widget.RecyclerView>
 

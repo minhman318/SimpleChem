@@ -1,13 +1,10 @@
 package com.manminh.simplechem.model;
 
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Pair;
 
 import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.balance.exception.ParseFormulaException;
 
-import java.net.SocketImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -187,34 +184,28 @@ public class Equation {
     }
 
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < mBfChemicals.size() - 1; i++) {
-            result += mBfChemicals.get(i).toString() + " + ";
+            result.append(mBfChemicals.get(i).toString()).append(" + ");
         }
-        result += mBfChemicals.get(mBfChemicals.size() - 1).toString()
-                + " "
-                + mSimpleEquation.getRegex()
-                + " ";
+        result.append(mBfChemicals.get(mBfChemicals.size() - 1).toString()).append(" ").append(mSimpleEquation.getRegex()).append(" ");
         for (int i = 0; i < mAtChemicals.size() - 1; i++) {
-            result += mAtChemicals.get(i).toString() + " + ";
+            result.append(mAtChemicals.get(i).toString()).append(" + ");
         }
-        result += mAtChemicals.get(mAtChemicals.size() - 1).toString();
-        return result;
+        result.append(mAtChemicals.get(mAtChemicals.size() - 1).toString());
+        return result.toString();
     }
 
     public String toHtmlSpannedStr() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < mBfChemicals.size() - 1; i++) {
-            result += mBfChemicals.get(i).toHtmlString() + " + ";
+            result.append(mBfChemicals.get(i).toHtmlString()).append(" + ");
         }
-        result += mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString()
-                + " "
-                + mSimpleEquation.getRegex()
-                + " ";
+        result.append(mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString()).append(" ").append(mSimpleEquation.getRegex()).append(" ");
         for (int i = 0; i < mAtChemicals.size() - 1; i++) {
-            result += mAtChemicals.get(i).toHtmlString() + " + ";
+            result.append(mAtChemicals.get(i).toHtmlString()).append(" + ");
         }
-        result += mAtChemicals.get(mAtChemicals.size() - 1).toHtmlString();
-        return result;
+        result.append(mAtChemicals.get(mAtChemicals.size() - 1).toHtmlString());
+        return result.toString();
     }
 }

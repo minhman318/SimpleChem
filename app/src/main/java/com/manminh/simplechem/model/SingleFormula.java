@@ -1,7 +1,6 @@
 package com.manminh.simplechem.model;
 
 import android.support.annotation.NonNull;
-import android.text.Html;
 
 import java.util.Map;
 
