@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <element name="Li" sup="+" value="..." />
+    <element name="K" sup="+" value="-2,295" />
+    <element name="Ba" sup="2+" value="..." />
+    <element name="Ca" sup="2+" value="-2.866" />
+    <element name="Na" sup="+" value="-2.714" />
+    <element name="Mg" sup="2+" value="-2.363" />
+    <element name="Ti" sup="2+" value="-1.750" />
+    <element name="Al" sup="3+" value="-1.662" />
+    <element name="Mn" sup="2+" value="-1.180" />
+    <element name="Zn" sup="2+" value="-0.763" />
+    <element name="Cr" sup="3+" value="-0.744" />
+    <element name="Fe" sup="2+" value="-0.440" />
+    <element name="Cd" sup="2+" value="-0.403" />
+    <element name="Co" sup="2+" value="-0.277" />
+    <element name="Ni" sup="2+" value="-0.250" />
+    <element name="Sn" sup="2+" value="-0.136" />
+    <element name="Pb" sup="2+" value="-0.126" />
+    <element name="Fe" sup="2+" value="..." />
+    <element name="2H" sup="+" value="0" />
+    <element name="Sn" sup="4+" value="0.050" />
+    <element name="Sb" sup="3+" value="0.250" />
+    <element name="Bi" sup="3+" value="0.230" />
+    <element name="Cu" sup="2+" value="0.337" />
+    <element name="Fe" sup="3+" value="0.77" />
+    <element name="Hg" sup="+" value="..." />
+    <element name="Ag" sup="+" value="0.799" />
+    <element name="Hg" sup="2+" value="..." />
+    <element name="Pt" sup="2+" value="1.200" />
+    <element name="Au" sup="3+" value="1.700" />
+</resources>

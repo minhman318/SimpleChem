@@ -13,16 +13,25 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.manminh.simplechem.ui.activityseries.ActivitySeriesFragment;
+import com.manminh.simplechem.ui.electseries.ElectSeriesFragment;
 import com.manminh.simplechem.R;
 import com.manminh.simplechem.ui.search.SearchFragment;
 import com.manminh.simplechem.ui.balance.BalanceFragment;
 
-public class MainActivity extends AppCompatActivity implements SearchFragment.OnFragmentInteractionListener, BalanceFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        SearchFragment.OnFragmentInteractionListener,
+        BalanceFragment.OnFragmentInteractionListener,
+        ElectSeriesFragment.OnFragmentInteractionListener,
+        ActivitySeriesFragment.OnFragmentInteractionListener {
+
     public static final String EQUATION_NAME_SEND_CODE = "equation";
     public static final String DETAILS_SEND_CODE = "details";
 
     private Fragment mSearchFragment;
     private Fragment mBalanceFragment;
+    private Fragment mElectSeriesFragment;
+    private Fragment mActivitySeriesFragment;
     private FragmentManager mFragmentManager;
 
     private Toolbar mToolBar;
@@ -51,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
 
         mSearchFragment = SearchFragment.newInstance();
         mBalanceFragment = BalanceFragment.newInstance();
+        mElectSeriesFragment = ElectSeriesFragment.newInstance();
+        mActivitySeriesFragment = ActivitySeriesFragment.newInstance();
         mFragmentManager = getSupportFragmentManager();
 
         mNavView = findViewById(R.id.nav_view);
@@ -61,16 +72,18 @@ public class MainActivity extends AppCompatActivity implements SearchFragment.On
                 switch (item.getItemId()) {
                     case R.id.nav_item_search:
                         mFragmentManager.beginTransaction().replace(R.id.fragment_panel, mSearchFragment).commit();
-                        mDrawer.closeDrawers();
                         break;
                     case R.id.nav_item_balance:
                         mFragmentManager.beginTransaction().replace(R.id.fragment_panel, mBalanceFragment).commit();
-                        mDrawer.closeDrawers();
                         break;
                     case R.id.nav_item_ddh:
-                        mDrawer.closeDrawers();
+                        mFragmentManager.beginTransaction().replace(R.id.fragment_panel, mElectSeriesFragment).commit();
+                        break;
+                    case R.id.nav_item_dhd:
+                        mFragmentManager.beginTransaction().replace(R.id.fragment_panel, mActivitySeriesFragment).commit();
                         break;
                 }
+                mDrawer.closeDrawers();
                 return true;
             }
 

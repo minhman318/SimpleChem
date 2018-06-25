@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="70dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_tv"
+    android:layout_marginTop="@dimen/mr_s"
+    android:layout_marginBottom="@dimen/mr_s"
+    android:layout_marginEnd="@dimen/mr_s">
+
+    <TextView
+        android:id="@+id/element_ion_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mr_xl"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/txt_sz_m"
+        android:textStyle="bold"
+        android:padding="@dimen/pd_s"
+        android:layout_gravity="center_horizontal"
+        android:text="Li+" />
+
+    <TextView
+        android:id="@+id/element_value_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mr_xl"
+        android:textColor="@color/textColor"
+        android:layout_gravity="center_horizontal"
+        android:text="-0.111" />
+
+    <TextView
+        android:id="@+id/element_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/txt_sz_m"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/pd_s"
+        android:text="Li" />
+
+</LinearLayout>

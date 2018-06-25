@@ -16,10 +16,10 @@
         <item
             android:id="@+id/nav_item_dhd"
             android:icon="@drawable/ic_dhd_24dp"
-            android:title="Dãy hoạt động hóa học kim loại" />
-        <item
+            android:title="Dãy hoạt động hóa học KL" />
+        <!--<item
             android:id="@+id/nav_item_soluble_table"
             android:icon="@drawable/ic_soluble_table_24dp"
-            android:title="Bảng tính tan" />
+            android:title="Bảng tính tan" /</-->
     </group>
 </menu>

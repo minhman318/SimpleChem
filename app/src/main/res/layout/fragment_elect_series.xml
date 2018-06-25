@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_tv"
+        android:textColor="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dãy điện hóa"
+            android:textSize="@dimen/txt_sz_l"
+            android:padding="@dimen/pd_m"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_container"
+        android:textColor="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tính Oxi hóa tăng dần &gt;&gt;"
+            android:textSize="@dimen/txt_sz_m"
+            android:padding="@dimen/pd_m"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ddh_rc_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/mr_s"
+        android:layout_marginEnd="@dimen/mr_s"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_container"
+        android:textColor="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;&lt;  Tính khử tăng dần"
+            android:textSize="@dimen/txt_sz_m"
+            android:padding="@dimen/pd_m"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal" />
+
+    </FrameLayout>
+
+</LinearLayout>

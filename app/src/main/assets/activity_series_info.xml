@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="type">
+        <if value="0">Kim loại mạnh</if>
+        <if value="1">Kim loại trung bình</if>
+        <if value="2">Kim loại yếu</if>
+    </item>
+    <item name="kick">
+        <if value="1">Đẩy kim loại đứng sau ra khỏi dung dịch muối.</if>
+        <if value="0">Không thể đẩy kim loại đứng sau ra khỏi dung dịch muối vì tác dụng với nước
+            trước.
+        </if>
+    </item>
+    <item name="water">
+        <if value="1">Tác dụng với nước ở điều kiện thường sinh ra khí H2.</if>
+        <if value="0">Không tác dụng với nước ở điều kiện thường.</if>
+    </item>
+    <item name="axit">
+        <if value="1">Tác dụng với axit HCl, H2SO4 loãng.</if>
+        <if value="0">Không tác dụng với axit HCl, H2SO4 loãng.</if>
+    </item>
+    <item name="oxit">
+        <if value="1">Có thể khử oxit kim loại bằng H2, CO.</if>
+        <if value="0">Không thể khử oxit kim loại bằng H2, CO.</if>
+    </item>
+</resources>

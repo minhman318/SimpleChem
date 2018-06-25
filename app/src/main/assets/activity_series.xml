@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <element symbol="K" type="0" water="1" kick="0" axit="1" oxit="0" />
+    <element symbol="Ba" type="0" water="1" kick="0" axit="1" oxit="0" />
+    <element symbol="Ca" type="0" water="1" kick="0" axit="1" oxit="0" />
+    <element symbol="Na" type="0" water="1" kick="0" axit="1" oxit="0" />
+    <element symbol="Mg" type="0" water="0" kick="1" axit="1" oxit="0" />
+    <element symbol="Al" type="0" water="0" kick="1" axit="1" oxit="0" />
+    <element symbol="Zn" type="1" water="0" kick="1" axit="1" oxit="0" />
+    <element symbol="Fe2+" type="1" water="0" kick="1" axit="1" oxit="1" />
+    <element symbol="Ni" type="1" water="0" kick="1" axit="1" oxit="1" />
+    <element symbol="Sn" type="1" water="0" kick="1" axit="1" oxit="1" />
+    <element symbol="Pb" type="1" water="0" kick="1" axit="1" oxit="1" />
+    <element symbol="H" type="-1" water="-1" kick="-1" axit="-1" oxit="-1" />
+    <element symbol="Cu" type="2" water="0" kick="1" axit="0" oxit="1" />
+    <element symbol="Hg+" type="2" water="0" kick="1" axit="0" oxit="1" />
+    <element symbol="Ag" type="2" water="0" kick="1" axit="0" oxit="1" />
+    <element symbol="Pt" type="2" water="0" kick="1" axit="0" oxit="1" />
+    <element symbol="Au" type="2" water="0" kick="1" axit="0" oxit="1" />
+</resources>

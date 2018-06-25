@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/mr_s"
+    android:background="@drawable/rounded_tv"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:padding="@dimen/pd_m"
+        android:text="Tac dung voi nuoc"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/txt_sz_m" />
+
+</LinearLayout>
