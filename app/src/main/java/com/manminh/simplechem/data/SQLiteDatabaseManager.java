@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.manminh.simplechem.model.SimpleEquation;
 
+// currently not use!
 public class SQLiteDatabaseManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "sqlite_database";
     // Equation table

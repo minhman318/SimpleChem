@@ -13,13 +13,15 @@ import com.manminh.simplechem.balance.exception.ParseEquationException;
 import com.manminh.simplechem.model.Equation;
 import com.manminh.simplechem.search.SearchResult;
 
-
+/**
+ * Implementation SearchEngine for https://phuongtrinhhoahoc.com
+ */
 public class PTHHSearchEngine implements SearchEngine {
-    public static final String URL = "https://phuongtrinhhoahoc.com";
-    public static final int ITEMS_PER_PAGE = 2;
+    private static final String URL = "https://phuongtrinhhoahoc.com";
+    private static final int ITEMS_PER_PAGE = 2;
 
     @Override
-    public ArrayList<SearchResult> Search(String in, String out, int page) throws IOException {
+    public ArrayList<SearchResult> search(String in, String out, int page) throws IOException {
         ArrayList<SearchResult> searchResults = new ArrayList<>();
         String url = buildQueryStr(in, out, page);
         Document mWeb = Jsoup.connect(url).get();

@@ -53,7 +53,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/mr_s"
+            android:layout_marginBottom="@dimen/mr_m"
             android:layout_marginEnd="@dimen/mr_l"
             android:layout_marginStart="@dimen/mr_l"
             android:layout_marginTop="@dimen/mr_s">
@@ -62,7 +62,7 @@
 
         <ProgressBar
             android:id="@+id/pg_bar"
-            android:theme="@style/LightAccent"
+            android:theme="@style/ProgressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

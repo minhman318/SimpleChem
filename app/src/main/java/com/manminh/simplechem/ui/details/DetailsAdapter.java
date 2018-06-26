@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.manminh.simplechem.R;
-import com.manminh.simplechem.search.Detail;
+import com.manminh.simplechem.search.EquationDetail;
 
 import java.util.List;
 
 public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHolder> {
-    private List<Detail> mData;
+    private List<EquationDetail> mData;
 
-    public DetailsAdapter(List<Detail> data) {
+    public DetailsAdapter(List<EquationDetail> data) {
         mData = data;
     }
 

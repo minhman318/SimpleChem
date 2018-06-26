@@ -7,7 +7,7 @@ package com.manminh.simplechem.ui;
  */
 public abstract class BasePresenter<V extends IView> implements IPresenter<V> {
 
-    // The view, is actually an activity
+    // The view, is actually an activity or fragment
     private V mView;
 
     @Override

@@ -4,6 +4,9 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This thread pool helps search multi page
+ */
 public class MyThreadPoolExecutor {
     private static final int NUMBER_AVAILABLE_CORES = Runtime.getRuntime().availableProcessors();
     private static final int KEEP_ALIVE_TIME = 1;

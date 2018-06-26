@@ -113,6 +113,12 @@ public class MathematicalBalanceEngine implements IBalanceEngine {
         return data;
     }
 
+    /**
+     * Check factors is greater than 0
+     *
+     * @param fractions is factors of equation
+     * @return factors id valid or not
+     */
     private boolean invalidResult(Fraction[] fractions) {
         for (Fraction frac : fractions) {
             if (frac.lessThanOrEqualZero()) return true;

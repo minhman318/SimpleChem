@@ -7,8 +7,7 @@
     </item>
     <item name="kick">
         <if value="1">Đẩy kim loại đứng sau ra khỏi dung dịch muối.</if>
-        <if value="0">Không thể đẩy kim loại đứng sau ra khỏi dung dịch muối vì tác dụng với nước
-            trước.
+        <if value="0">Không đẩy kim loại đứng sau ra khỏi dung dịch muối, tác dụng với nước trước.
         </if>
     </item>
     <item name="water">

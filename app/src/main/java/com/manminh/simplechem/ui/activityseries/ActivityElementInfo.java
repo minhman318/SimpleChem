@@ -3,11 +3,11 @@ package com.manminh.simplechem.ui.activityseries;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementActivityInfo {
+public class ActivityElementInfo {
     private String mSymbol;
     private List<String> mAttrs;
 
-    public ElementActivityInfo(String symbol) {
+    public ActivityElementInfo(String symbol) {
         mSymbol = symbol;
         mAttrs = new ArrayList<>();
     }

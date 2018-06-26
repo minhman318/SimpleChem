@@ -3,16 +3,20 @@ package com.manminh.simplechem.search;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Detail implements Parcelable {
+/**
+ * One of equation details
+ * Ex: mName: "Hiện tượng"; mContent: "Có khí thoát ra"
+ */
+public class EquationDetail implements Parcelable {
     public String mName;
     public String mContent;
 
-    public Detail(String name, String content) {
+    public EquationDetail(String name, String content) {
         mName = name;
         mContent = content;
     }
 
-    protected Detail(Parcel in) {
+    protected EquationDetail(Parcel in) {
         mName = in.readString();
         mContent = in.readString();
     }
@@ -28,15 +32,15 @@ public class Detail implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Detail> CREATOR = new Creator<Detail>() {
+    public static final Creator<EquationDetail> CREATOR = new Creator<EquationDetail>() {
         @Override
-        public Detail createFromParcel(Parcel in) {
-            return new Detail(in);
+        public EquationDetail createFromParcel(Parcel in) {
+            return new EquationDetail(in);
         }
 
         @Override
-        public Detail[] newArray(int size) {
-            return new Detail[size];
+        public EquationDetail[] newArray(int size) {
+            return new EquationDetail[size];
         }
     };
 }

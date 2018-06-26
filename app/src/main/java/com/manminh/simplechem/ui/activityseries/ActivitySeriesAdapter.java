@@ -1,6 +1,5 @@
 package com.manminh.simplechem.ui.activityseries;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,18 +13,16 @@ import com.manminh.simplechem.R;
 import java.util.List;
 
 public class ActivitySeriesAdapter extends RecyclerView.Adapter<ActivitySeriesAdapter.ViewHolder> {
-    private List<ElementActivityInfo> mData;
+    private List<ActivityElementInfo> mData;
     private OnItemSelectedListener mListener;
-    private Context mContext;
 
     public interface OnItemSelectedListener {
         void onSelected(int pos);
     }
 
-    public ActivitySeriesAdapter(List<ElementActivityInfo> data, OnItemSelectedListener listener, Context context) {
+    public ActivitySeriesAdapter(List<ActivityElementInfo> data, OnItemSelectedListener listener) {
         mData = data;
         mListener = listener;
-        mContext = context;
     }
 
     @NonNull
@@ -53,7 +50,6 @@ public class ActivitySeriesAdapter extends RecyclerView.Adapter<ActivitySeriesAd
             super(itemView);
             mElementTv = itemView.findViewById(R.id.element_tv);
             mItem = itemView.findViewById(R.id.activity_series_item);
-            mItem.setBackground(mContext.getDrawable(R.drawable.round_dark_container));
         }
 
         public void bind(final int pos) {

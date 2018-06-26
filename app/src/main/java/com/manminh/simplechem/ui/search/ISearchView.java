@@ -1,6 +1,6 @@
 package com.manminh.simplechem.ui.search;
 
-import com.manminh.simplechem.search.Detail;
+import com.manminh.simplechem.search.EquationDetail;
 import com.manminh.simplechem.ui.IView;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public interface ISearchView extends IView {
 
     void showInfo(String info);
 
-    void seeDetails(String equation, ArrayList<Detail> info);
+    void seeDetails(String equation, ArrayList<EquationDetail> info);
 
     void toMoreButton();
 

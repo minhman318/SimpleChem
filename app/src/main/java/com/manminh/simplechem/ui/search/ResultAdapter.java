@@ -21,7 +21,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     private OnItemSelectedListener mListener = null;
 
     public interface OnItemSelectedListener {
-        void onSelected(int pos);
+        void onSelected(int position);
     }
 
     public ResultAdapter(List<String> data, OnItemSelectedListener listener) {

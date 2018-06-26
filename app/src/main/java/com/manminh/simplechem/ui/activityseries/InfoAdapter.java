@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.manminh.simplechem.R;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder> {
-    private ElementActivityInfo mData;
+    private ActivityElementInfo mData;
 
-    public InfoAdapter(ElementActivityInfo data) {
+    public InfoAdapter(ActivityElementInfo data) {
         mData = data;
     }
 

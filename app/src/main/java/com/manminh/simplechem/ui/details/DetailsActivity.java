@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.manminh.simplechem.R;
-import com.manminh.simplechem.search.Detail;
+import com.manminh.simplechem.search.EquationDetail;
 import com.manminh.simplechem.ui.main.MainActivity;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        ArrayList<Detail> details;
+        ArrayList<EquationDetail> details;
         if (intent.hasExtra(MainActivity.DETAILS_SEND_CODE)
                 && intent.hasExtra(MainActivity.EQUATION_NAME_SEND_CODE)) {
 

@@ -8,12 +8,23 @@ import com.manminh.simplechem.balance.exception.ParseEquationException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents equation, chemicals is string with a factor
+ */
 public class SimpleEquation {
+
+    // List of Pair<formula string, factor>
     private List<Pair<String, Integer>> mBfChemicals;
-    private List<Pair<String, Integer>> mAtChemicals;
+    private List<Pair<String, Integer>> mAfChemicals;
 
     private String mRegex;
 
+    /**
+     * Init from string
+     *
+     * @param str ex: "H2+O2->H2O"
+     * @throws ParseEquationException
+     */
     public SimpleEquation(String str) throws ParseEquationException {
         str = str.replace(" ", "");
         String regex;
@@ -36,7 +47,7 @@ public class SimpleEquation {
         chemicals = str.split(regex);
         if (chemicals.length == 2) {
             mBfChemicals = new ArrayList<>();
-            mAtChemicals = new ArrayList<>();
+            mAfChemicals = new ArrayList<>();
 
             String[] before = chemicals[0].split("\\+");
             String[] after = chemicals[1].split("\\+");
@@ -49,16 +60,22 @@ public class SimpleEquation {
                 mBfChemicals.add(extractFactor(s));
             }
             for (String s : after) {
-                mAtChemicals.add(extractFactor(s));
+                mAfChemicals.add(extractFactor(s));
             }
         } else {
             throw new ParseEquationException(ParseEquationException.INVALID_SYNTAX);
         }
     }
 
+    /**
+     * Init from database string
+     *
+     * @param beforeData ex: "2 H2 1 O2"
+     * @param afterData  ex" 2 H2O"
+     */
     public SimpleEquation(String beforeData, String afterData) {
         mBfChemicals = new ArrayList<>();
-        mAtChemicals = new ArrayList<>();
+        mAfChemicals = new ArrayList<>();
         String[] s1 = beforeData.split(" ");
         for (int i = 0; i < s1.length * 2; i = i + 2) {
             String chem = s1[i + 1];
@@ -69,7 +86,7 @@ public class SimpleEquation {
         for (int i = 0; i < s2.length * 2; i = i + 2) {
             String chem = s2[i + 1];
             int factor = Integer.parseInt(s2[i]);
-            mAtChemicals.add(new Pair<>(chem, factor));
+            mAfChemicals.add(new Pair<>(chem, factor));
         }
     }
 
@@ -91,12 +108,12 @@ public class SimpleEquation {
     }
 
     public List<Pair<String, Integer>> getAfterChemicals() {
-        return mAtChemicals;
+        return mAfChemicals;
     }
 
     public boolean compareAndCopyFactor(SimpleEquation other) {
         int k = 0;
-        int[] factors = new int[mBfChemicals.size() + mAtChemicals.size()];
+        int[] factors = new int[mBfChemicals.size() + mAfChemicals.size()];
         for (int i = 0; i < mBfChemicals.size(); i++) {
             String s1 = mBfChemicals.get(i).first;
             boolean has = false;
@@ -114,11 +131,11 @@ public class SimpleEquation {
                 return false;
             }
         }
-        for (int i = 0; i < mAtChemicals.size(); i++) {
-            String s1 = mAtChemicals.get(i).first;
+        for (int i = 0; i < mAfChemicals.size(); i++) {
+            String s1 = mAfChemicals.get(i).first;
             boolean has = false;
             int factor = 1;
-            for (Pair<String, Integer> p2 : other.mAtChemicals) {
+            for (Pair<String, Integer> p2 : other.mAfChemicals) {
                 String s2 = p2.first;
                 if (s1.equals(s2)) {
                     has = true;
@@ -141,9 +158,9 @@ public class SimpleEquation {
             String f = mBfChemicals.get(i).first;
             mBfChemicals.set(i, new Pair<>(f, factors[k++]));
         }
-        for (int i = 0; i < mAtChemicals.size(); i++) {
-            String f = mAtChemicals.get(i).first;
-            mAtChemicals.set(i, new Pair<>(f, factors[k++]));
+        for (int i = 0; i < mAfChemicals.size(); i++) {
+            String f = mAfChemicals.get(i).first;
+            mAfChemicals.set(i, new Pair<>(f, factors[k++]));
         }
     }
 
@@ -156,15 +173,16 @@ public class SimpleEquation {
         }
         p = mBfChemicals.get(mBfChemicals.size() - 1);
         result.append(String.valueOf(p.second)).append(p.first).append(" -> ");
-        for (int i = 0; i < mAtChemicals.size() - 1; i++) {
-            p = mAtChemicals.get(i);
+        for (int i = 0; i < mAfChemicals.size() - 1; i++) {
+            p = mAfChemicals.get(i);
             result.append(String.valueOf(p.second)).append(p.first).append(" + ");
         }
-        p = mAtChemicals.get(mAtChemicals.size() - 1);
+        p = mAfChemicals.get(mAfChemicals.size() - 1);
         result.append(String.valueOf(p.second)).append(p.first).append(" -> ");
         return result.toString();
     }
 
+    // Build data string to save to database
     public String getBeforeDataString() {
         StringBuilder res = new StringBuilder();
         int i;
@@ -176,15 +194,15 @@ public class SimpleEquation {
         return res.toString();
     }
 
-
+    // Build data string to save to database
     public String getAfterDataString() {
         StringBuilder res = new StringBuilder();
         int i;
-        for (i = 0; i < mAtChemicals.size() - 1; i++) {
-            Pair<String, Integer> p = mAtChemicals.get(i);
+        for (i = 0; i < mAfChemicals.size() - 1; i++) {
+            Pair<String, Integer> p = mAfChemicals.get(i);
             res.append(p.first).append(" ");
         }
-        res.append(mAtChemicals.get(i).first);
+        res.append(mAfChemicals.get(i).first);
         return res.toString();
     }
 

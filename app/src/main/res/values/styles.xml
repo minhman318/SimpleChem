@@ -18,8 +18,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="LightAccent" parent="ThemeOverlay.AppCompat.Light">
+    <style name="ProgressBarStyle" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">@color/progess_bar_color</item>
+    </style>
+
+    <style name="EditTextStyle" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/edittext_accent</item>
     </style>
 
 </resources>

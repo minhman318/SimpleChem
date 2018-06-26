@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#202250</color>
     <color name="colorAccent">#363869</color>
     <color name="textColor">#fafafa</color>
-    <color name="edittextColor">#807E9E</color>
+    <color name="edittext_color">#656384</color>
+    <color name="edittext_accent">#fafafa</color>
     <color name="gradient_start">#FF416C</color>
     <color name="gradient_end">#FF4B2B</color>
     <color name="gradient_start_clicked">#ff8da7</color>

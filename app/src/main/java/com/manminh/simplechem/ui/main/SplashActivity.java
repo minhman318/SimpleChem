@@ -21,15 +21,10 @@ public class SplashActivity extends AppCompatActivity {
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                prepareData();
                 next();
             }
         })).start();
 
-    }
-
-    private void prepareData() {
-        ElementDictionary.setUpData(XmlDataManager.getElementSymbols(this));
     }
 
     private void next() {

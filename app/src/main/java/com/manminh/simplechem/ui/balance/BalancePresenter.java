@@ -14,7 +14,7 @@ public class BalancePresenter<V extends IBalanceView> extends BasePresenter<V> i
     private BalanceTool mTool;
 
     public BalancePresenter() {
-        mTool = new BalanceTool();
+        mTool = BalanceTool.getInstance();
     }
 
     @Override

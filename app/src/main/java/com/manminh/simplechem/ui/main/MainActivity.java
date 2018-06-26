@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.manminh.simplechem.data.XmlDataManager;
+import com.manminh.simplechem.model.ElementDictionary;
 import com.manminh.simplechem.ui.activityseries.ActivitySeriesFragment;
 import com.manminh.simplechem.ui.electseries.ElectSeriesFragment;
 import com.manminh.simplechem.R;
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         mFragmentManager.beginTransaction().add(R.id.fragment_panel, mSearchFragment).commit();
+        ElementDictionary.setUpData(XmlDataManager.getElementSymbols(this));
     }
 
     @Override

@@ -24,24 +24,22 @@ public class Equation {
     private List<Chemical> mBfChemicals;
 
     // After chemical list
-    private List<Chemical> mAtChemicals;
+    private List<Chemical> mAfChemicals;
 
     // One map for each before chemicals to count number of elements
     private List<Map<String, Integer>> mBfElementMapList = new ArrayList<>();
 
     // One map for each after chemicals to count number of elements
-    private List<Map<String, Integer>> mAtElementMapList = new ArrayList<>();
+    private List<Map<String, Integer>> mAfElementMapList = new ArrayList<>();
 
     // Name of all before elements
     private Set<String> mBfElementNameList = new HashSet<>();
 
     // Name of all after elements
-    private Set<String> mAtElementNameList = new HashSet<>();
+    private Set<String> mAfElementNameList = new HashSet<>();
 
     // is balanced
     private boolean mIsBalanced = false;
-
-    private String mRegex;
 
     private SimpleEquation mSimpleEquation;
 
@@ -56,7 +54,7 @@ public class Equation {
     public Equation(SimpleEquation simpleEquation) throws ParseEquationException {
         mSimpleEquation = simpleEquation;
         mBfChemicals = new ArrayList<>();
-        mAtChemicals = new ArrayList<>();
+        mAfChemicals = new ArrayList<>();
 
         try {
             for (Pair<String, Integer> p : simpleEquation.getBeforeChemicals()) {
@@ -71,9 +69,9 @@ public class Equation {
                 Chemical chemical = buildChemical(p);
                 HashMap<String, Integer> logger = new HashMap<>();
                 chemical.getFormula().logElement(logger, 1);
-                mAtElementNameList.addAll(logger.keySet());
-                mAtElementMapList.add(logger);
-                mAtChemicals.add(chemical);
+                mAfElementNameList.addAll(logger.keySet());
+                mAfElementMapList.add(logger);
+                mAfChemicals.add(chemical);
             }
 
             // Check balance state
@@ -106,9 +104,9 @@ public class Equation {
                 int factor = mBfChemicals.get(i).getFactor();
                 beforeCount += factor * countElement(name, mBfElementMapList.get(i));
             }
-            for (int i = 0; i < mAtElementMapList.size(); i++) {
-                int factor = mAtChemicals.get(i).getFactor();
-                afterCount += factor * countElement(name, mAtElementMapList.get(i));
+            for (int i = 0; i < mAfElementMapList.size(); i++) {
+                int factor = mAfChemicals.get(i).getFactor();
+                afterCount += factor * countElement(name, mAfElementMapList.get(i));
             }
             if (beforeCount != afterCount) return false;
         }
@@ -121,7 +119,7 @@ public class Equation {
      * @throws IllegalArgumentException before element is not correspond to after element
      */
     public void verify() throws ParseEquationException {
-        if (!mBfElementNameList.containsAll(mAtElementNameList)) {
+        if (!mBfElementNameList.containsAll(mAfElementNameList)) {
             throw new ParseEquationException(ParseEquationException.INVALID_EQUATION);
         }
     }
@@ -138,7 +136,7 @@ public class Equation {
     }
 
     public List<Chemical> getAfter() {
-        return mAtChemicals;
+        return mAfChemicals;
     }
 
     public void markBalanced() {
@@ -150,7 +148,7 @@ public class Equation {
     }
 
     public int chemicalCount() {
-        return mBfChemicals.size() + mAtChemicals.size();
+        return mBfChemicals.size() + mAfChemicals.size();
     }
 
     public int beforeChemCount() {
@@ -158,7 +156,7 @@ public class Equation {
     }
 
     public int afterChemCount() {
-        return mAtChemicals.size();
+        return mAfChemicals.size();
     }
 
     public SimpleEquation getSimpleEquation() {
@@ -177,8 +175,8 @@ public class Equation {
     }
 
     public int countAfterElement(String name, int which) {
-        if (mAtElementMapList.get(which).containsKey(name)) {
-            return mAtElementMapList.get(which).get(name);
+        if (mAfElementMapList.get(which).containsKey(name)) {
+            return mAfElementMapList.get(which).get(name);
         }
         return 0;
     }
@@ -189,10 +187,10 @@ public class Equation {
             result.append(mBfChemicals.get(i).toString()).append(" + ");
         }
         result.append(mBfChemicals.get(mBfChemicals.size() - 1).toString()).append(" ").append(mSimpleEquation.getRegex()).append(" ");
-        for (int i = 0; i < mAtChemicals.size() - 1; i++) {
-            result.append(mAtChemicals.get(i).toString()).append(" + ");
+        for (int i = 0; i < mAfChemicals.size() - 1; i++) {
+            result.append(mAfChemicals.get(i).toString()).append(" + ");
         }
-        result.append(mAtChemicals.get(mAtChemicals.size() - 1).toString());
+        result.append(mAfChemicals.get(mAfChemicals.size() - 1).toString());
         return result.toString();
     }
 
@@ -202,10 +200,10 @@ public class Equation {
             result.append(mBfChemicals.get(i).toHtmlString()).append(" + ");
         }
         result.append(mBfChemicals.get(mBfChemicals.size() - 1).toHtmlString()).append(" ").append(mSimpleEquation.getRegex()).append(" ");
-        for (int i = 0; i < mAtChemicals.size() - 1; i++) {
-            result.append(mAtChemicals.get(i).toHtmlString()).append(" + ");
+        for (int i = 0; i < mAfChemicals.size() - 1; i++) {
+            result.append(mAfChemicals.get(i).toHtmlString()).append(" + ");
         }
-        result.append(mAtChemicals.get(mAtChemicals.size() - 1).toHtmlString());
+        result.append(mAfChemicals.get(mAfChemicals.size() - 1).toHtmlString());
         return result.toString();
     }
 }

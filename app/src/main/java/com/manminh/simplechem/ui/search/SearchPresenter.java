@@ -1,7 +1,5 @@
 package com.manminh.simplechem.ui.search;
 
-import android.util.Log;
-
 import com.manminh.simplechem.search.SearchResult;
 import com.manminh.simplechem.search.SearchTool;
 import com.manminh.simplechem.search.engine.PTHHSearchEngine;
@@ -14,10 +12,13 @@ import java.util.List;
 public class SearchPresenter<V extends ISearchView> extends BasePresenter<V> implements
         ISearchPresenter, SearchTool.OnSearchResult {
 
+    private static final String CANNOT_SEARCH_TXT = "Không thể tìm kiếm. Kiểm tra kết nối.";
+    private static final String EMPTY_RESULT_TXT = "Không tìm thấy kết quả.";
+
     private SearchTool mTool;
     private SearchEngine mEngine;
     private List<SearchResult> mResults = null;
-    private int mPage = 1;
+    private int mCurrentPage = 1;
 
     public SearchPresenter() {
         mTool = new SearchTool();
@@ -25,17 +26,17 @@ public class SearchPresenter<V extends ISearchView> extends BasePresenter<V> imp
     }
 
     @Override
-    public synchronized void onResult(List<SearchResult> searchResults, int page) {
+    public synchronized void onResult(List<SearchResult> searchResults, int lastPage) {
         V view = getView();
         if (view == null) {
             return;
         }
-        mPage = page;
+        mCurrentPage = lastPage;
         if (mResults == null) {
             view.hideLoading();
             view.showList();
             if (searchResults.size() < 1) {
-                view.showInfo("Không tìm thấy kết quả");
+                view.showInfo(EMPTY_RESULT_TXT);
                 return;
             }
             mResults = searchResults;
@@ -64,34 +65,34 @@ public class SearchPresenter<V extends ISearchView> extends BasePresenter<V> imp
         }
         view.hideLoading();
         view.showList();
-        view.showInfo("Không thể tìm kiếm. Kiểm tra Internet!");
+        view.showInfo(CANNOT_SEARCH_TXT);
     }
 
     @Override
-    public void search(String in, String out, int num) {
+    public void search(String breforeStr, String afterStr, int numItem) {
         reset();
-        mResults = null;
         getView().showLoading();
         getView().hideList();
-        mTool.search(mEngine, in, out, num, mPage, this);
+        mTool.search(mEngine, breforeStr, afterStr, numItem, mCurrentPage, this);
     }
 
     @Override
-    public void searchMore(int num) {
+    public void searchMore(int numItem) {
         getView().showLoading();
-        mPage++;
-        mTool.searchMore(num, mPage);
+        mCurrentPage++;
+        mTool.searchMore(numItem, mCurrentPage);
     }
 
-    public void onSelected(int pos) {
+    public void onSelected(int position) {
         if (mResults != null) {
-            SearchResult result = mResults.get(pos);
+            SearchResult result = mResults.get(position);
             getView().seeDetails(result.getEquation(), result.getDetails());
         }
     }
 
     @Override
     public void reset() {
-        mPage = 1;
+        mCurrentPage = 1;
+        mResults = null;
     }
 }

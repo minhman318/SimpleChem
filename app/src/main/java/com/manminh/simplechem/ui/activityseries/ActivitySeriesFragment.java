@@ -18,14 +18,12 @@ import com.manminh.simplechem.data.XmlDataManager;
 
 import java.util.List;
 
-
 public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAdapter.OnItemSelectedListener {
     private OnFragmentInteractionListener mListener;
     private ActivitySeriesAdapter mAdapter;
     private TextView mSymbolTv;
     private RecyclerView mInfoRcView;
-
-    private List<ElementActivityInfo> mData;
+    private List<ActivityElementInfo> mData;
 
     public ActivitySeriesFragment() {
 
@@ -49,7 +47,7 @@ public class ActivitySeriesFragment extends Fragment implements ActivitySeriesAd
         mInfoRcView = view.findViewById(R.id.activity_series__info_rc_view);
         mInfoRcView.setVisibility(View.GONE);
         mData = XmlDataManager.getActivitySeries(this.getActivity());
-        mAdapter = new ActivitySeriesAdapter(mData, this, this.getActivity());
+        mAdapter = new ActivitySeriesAdapter(mData, this);
         mRcView.setAdapter(mAdapter);
     }
 

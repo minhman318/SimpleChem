@@ -11,7 +11,7 @@ public interface IBalanceEngine {
     /**
      * Balance an equation object, may modify the equation if balance successfully
      *
-     * @param equation
+     * @param equation object want to balance
      * @throws FailedBalanceException if cannot balance
      *                                use FailedBalanceException.getExceptionCode() for more details
      */

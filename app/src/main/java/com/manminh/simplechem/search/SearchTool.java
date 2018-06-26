@@ -4,45 +4,63 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.manminh.simplechem.search.engine.PTHHSearchEngine;
 import com.manminh.simplechem.search.engine.SearchEngine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Use an thread pool to search multi thread, multi page
+ */
 public class SearchTool implements Runnable {
     private static final int ERROR = 0;
     private static final int SUCESSFUL = 1;
 
     public interface OnSearchResult {
-        void onResult(List<SearchResult> searchResults, int page);
+        void onResult(List<SearchResult> searchResults, int lastPage);
 
         void onError();
     }
 
     private SearchEngine mEngine;
-    private String mIn;
-    private String mOut;
+    private String mBeforeStr;
+    private String mAfterStr;
+    private Integer mCurrentPage;
+    private boolean mStopAll = false;
 
     private OnSearchResult mListener;
 
-    private Integer mPage;
-    private boolean mStopAll = false;
+    /**
+     * Main search method
+     * Result can be get from onResult
+     *
+     * @param engine    is SearchEngine
+     * @param beforeStr is before chemicals string
+     * @param afterStr  is after chemicals string
+     * @param numItem   is number result items want to return
+     * @param page      is which page to start
+     * @param listener  is who want to receive result
+     */
+    public void search(SearchEngine engine
+            , String beforeStr
+            , String afterStr
+            , int numItem
+            , int page
+            , OnSearchResult listener) {
 
-    public void search(SearchEngine engine, String in, String out, int item, int page, OnSearchResult listener) {
         mStopAll = false;
-        mPage = page;
+        mCurrentPage = page;
         mEngine = engine;
-        mIn = in;
-        mOut = out;
+        mBeforeStr = beforeStr;
+        mAfterStr = afterStr;
         mListener = listener;
 
         int loop;
-        if (item % engine.getNumberItemsPerPage() == 0) {
-            loop = item / engine.getNumberItemsPerPage();
+        if (numItem % engine.getNumberItemsPerPage() == 0) {
+            loop = numItem / engine.getNumberItemsPerPage();
         } else {
-            loop = item / engine.getNumberItemsPerPage() + 1;
+            loop = numItem / engine.getNumberItemsPerPage() + 1;
         }
 
         MyThreadPoolExecutor poolExecutor = MyThreadPoolExecutor.getInstance();
@@ -51,15 +69,21 @@ public class SearchTool implements Runnable {
         }
     }
 
-    public void searchMore(int item, int page) {
+    /**
+     * search more result
+     *
+     * @param numItem is number of items
+     * @param page    is the last page
+     */
+    public void searchMore(int numItem, int page) {
         mStopAll = false;
-        mPage = page;
+        mCurrentPage = page;
 
         int loop;
-        if (item % mEngine.getNumberItemsPerPage() == 0) {
-            loop = item / mEngine.getNumberItemsPerPage();
+        if (numItem % mEngine.getNumberItemsPerPage() == 0) {
+            loop = numItem / mEngine.getNumberItemsPerPage();
         } else {
-            loop = item / mEngine.getNumberItemsPerPage() + 1;
+            loop = numItem / mEngine.getNumberItemsPerPage() + 1;
         }
 
         MyThreadPoolExecutor poolExecutor = MyThreadPoolExecutor.getInstance();
@@ -74,8 +98,8 @@ public class SearchTool implements Runnable {
             switch (msg.what) {
                 case SUCESSFUL:
                     ArrayList<SearchResult> searchResults = (ArrayList<SearchResult>) msg.obj;
-                    int page = msg.arg1;
-                    mListener.onResult(searchResults, page);
+                    int lastPage = msg.arg1;
+                    mListener.onResult(searchResults, lastPage);
                     break;
                 case ERROR:
                     mListener.onError();
@@ -91,17 +115,13 @@ public class SearchTool implements Runnable {
         Message msg = mHandler.obtainMessage();
         try {
             if (!mStopAll) {
-                SearchEngine e = new PTHHSearchEngine();
                 ArrayList<SearchResult> searchResult;
-
                 int page;
-                synchronized (mPage) {
-                    page = mPage;
-                    mPage++;
+                synchronized (mCurrentPage) {
+                    page = mCurrentPage;
+                    mCurrentPage++;
                 }
-
-                searchResult = e.Search(mIn, mOut, page);
-
+                searchResult = mEngine.search(mBeforeStr, mAfterStr, page);
                 if (searchResult.size() < 1) {
                     mStopAll = true;
                 }

@@ -2,13 +2,17 @@ package com.manminh.simplechem.search;
 
 import java.util.ArrayList;
 
+/**
+ * Represents search result, comprises an equation string and list of Detail objects
+ */
 public class SearchResult {
     private String mEquation;
-    private ArrayList<Detail> mDetails;
+    private ArrayList<EquationDetail> mDetails;
 
+    // Builder design pattern
     public static class Builder {
         String mBEquation;
-        ArrayList<Detail> mBDetails;
+        ArrayList<EquationDetail> mBDetails;
 
         public Builder(String eq) {
             mBEquation = eq;
@@ -16,7 +20,7 @@ public class SearchResult {
         }
 
         public SearchResult.Builder addDetail(String name, String content) {
-            Detail detail = new Detail(name, content);
+            EquationDetail detail = new EquationDetail(name, content);
             mBDetails.add(detail);
             return this;
         }
@@ -24,11 +28,6 @@ public class SearchResult {
         public SearchResult build() {
             return new SearchResult(this);
         }
-    }
-
-    public SearchResult(String eq, ArrayList<Detail> details) {
-        mEquation = eq;
-        mDetails = details;
     }
 
     public SearchResult(Builder builder) {
@@ -40,7 +39,7 @@ public class SearchResult {
         return mEquation;
     }
 
-    public ArrayList<Detail> getDetails() {
+    public ArrayList<EquationDetail> getDetails() {
         return mDetails;
     }
 }

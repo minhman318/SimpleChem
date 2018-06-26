@@ -3,7 +3,7 @@ package com.manminh.simplechem.data;
 import android.content.Context;
 import android.util.Pair;
 
-import com.manminh.simplechem.ui.activityseries.ElementActivityInfo;
+import com.manminh.simplechem.ui.activityseries.ActivityElementInfo;
 import com.manminh.simplechem.ui.electseries.ElectElement;
 
 import org.w3c.dom.Document;
@@ -22,12 +22,25 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+/**
+ * Help read xml data (in assets folder)
+ */
 public class XmlDataManager {
+    private static final String ELEMENTS_XML = "elements.xml";
+    private static final String ELECTROCHEMICAL_SERIES_XML = "electrochemical_series.xml";
+    private static final String ACTIVITIES_SERIES_XML = "activity_series.xml";
+    private static final String ACTIVITIES_SERIES_INFO_XML = "activity_series_info.xml";
 
+    /**
+     * Read electrochemical_series.xml and return electrochemical series (list of ElectElement objects)
+     *
+     * @param context for open asset file
+     * @return list of ElectElement objects
+     */
     public static List<ElectElement> getElectrochemicalSeries(Context context) {
         List<ElectElement> res = new ArrayList<>();
         try {
-            InputStream is = context.getAssets().open("electrochemical_series.xml");
+            InputStream is = context.getAssets().open(ELECTROCHEMICAL_SERIES_XML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
@@ -52,10 +65,16 @@ public class XmlDataManager {
         return res;
     }
 
+    /**
+     * Read elements.xml and return list of element symbols
+     *
+     * @param context for reading assets folder
+     * @return list of symbols (string)
+     */
     public static Set<String> getElementSymbols(Context context) {
         Set<String> res = new HashSet<>();
         try {
-            InputStream is = context.getAssets().open("elements.xml");
+            InputStream is = context.getAssets().open(ELEMENTS_XML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
@@ -75,11 +94,17 @@ public class XmlDataManager {
         return res;
     }
 
-    public static List<ElementActivityInfo> getActivitySeries(Context context) {
-        List<ElementActivityInfo> res = new ArrayList<>();
+    /**
+     * Read activity_series.xml and return list of Chemistry activity series
+     *
+     * @param context for reading asset folder
+     * @return list of ActivityElementInfo objects
+     */
+    public static List<ActivityElementInfo> getActivitySeries(Context context) {
+        List<ActivityElementInfo> res = new ArrayList<>();
         Map<Pair<String, String>, String> infoRef = createInfoRef(context);
         try {
-            InputStream is = context.getAssets().open("activity_series.xml");
+            InputStream is = context.getAssets().open(ACTIVITIES_SERIES_XML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);
@@ -91,7 +116,7 @@ public class XmlDataManager {
             for (int i = 0; i < nodes.getLength(); i++) {
                 Node node = nodes.item(i);
                 Element e = (Element) node;
-                ElementActivityInfo info = new ElementActivityInfo(e.getAttribute("symbol"));
+                ActivityElementInfo info = new ActivityElementInfo(e.getAttribute("symbol"));
                 info.addInfo(infoRef.get(new Pair<>("type", e.getAttribute("type"))));
                 info.addInfo(infoRef.get(new Pair<>("water", e.getAttribute("water"))));
                 info.addInfo(infoRef.get(new Pair<>("kick", e.getAttribute("kick"))));
@@ -105,10 +130,16 @@ public class XmlDataManager {
         return res;
     }
 
+    /**
+     * Read activity_series_info.xml and return reference map, use for getActivitySeries
+     *
+     * @param context for reading asset folder
+     * @return reference map. Mapping ex: ("type","0") => "Kim loại mạnh"
+     */
     private static Map<Pair<String, String>, String> createInfoRef(Context context) {
         Map<Pair<String, String>, String> res = new HashMap<>();
         try {
-            InputStream is = context.getAssets().open("activity_series_info.xml");
+            InputStream is = context.getAssets().open(ACTIVITIES_SERIES_INFO_XML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(is);

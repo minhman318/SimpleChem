@@ -33,14 +33,20 @@ public class BalanceTool implements Runnable {
         void onParseFormulaFailed(int exCode);
     }
 
+    // Flags for handler message
     private static final int BALANCE_SUCCESSFUL = 0;
     private static final int BALANCE_FAILED = 1;
     private static final int HAS_BEEN_BALANCED = 2;
     private static final int ILLEGAL_EQUATION = 3;
     private static final int ILLEGAL_FORMULA = 4;
 
+    // Ex: "H2+O2=H2O"
     private String mEquationStr;
+
+    // UI Context
     private OnBalanceResultListener mListener;
+
+    // BalanceEngine
     private IBalanceEngine mEngine;
 
     // Thread to do async task
@@ -54,25 +60,28 @@ public class BalanceTool implements Runnable {
         return instance;
     }
 
+    private BalanceTool() {
+    }
+
     // Handler to notify main thread for updating UI
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             int flag = msg.what;
             switch (flag) {
-                case BALANCE_SUCCESSFUL:
+                case BALANCE_SUCCESSFUL: // successful
                     mListener.onBalanceSuccessful((Equation) msg.obj);
                     break;
-                case BALANCE_FAILED:
+                case BALANCE_FAILED: // cannot balance
                     mListener.onBalanceFailed();
                     break;
-                case HAS_BEEN_BALANCED:
+                case HAS_BEEN_BALANCED: // no need to balance
                     mListener.onHasBeenBalanced((Equation) msg.obj);
                     break;
-                case ILLEGAL_EQUATION:
+                case ILLEGAL_EQUATION: // parse equation failed
                     mListener.onParseEquationFailed((int) msg.obj);
                     break;
-                case ILLEGAL_FORMULA:
+                case ILLEGAL_FORMULA: // parse formula failed
                     mListener.onParseFormulaFailed((int) msg.obj);
                     break;
                 default:

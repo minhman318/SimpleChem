@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.manminh.simplechem.R;
-import com.manminh.simplechem.search.Detail;
+import com.manminh.simplechem.search.EquationDetail;
 import com.manminh.simplechem.ui.details.DetailsActivity;
 import com.manminh.simplechem.ui.main.MainActivity;
 
@@ -28,6 +28,9 @@ import java.util.List;
 
 public class SearchFragment extends Fragment implements ISearchView, ResultAdapter.OnItemSelectedListener {
     private static final int LIMIT_RESULT = 10;
+    private static final String SHOW_MORE_TXT = "Hiển thị thêm";
+    private static final String SEARCH_TXT = "Tìm kiếm";
+
     private EditText mBeforeEdt;
     private EditText mAfterEdt;
     private Button mSearchBtn;
@@ -197,14 +200,14 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
     }
 
     @Override
-    public void onSelected(int pos) {
+    public void onSelected(int position) {
         if (!mProcessing) {
-            mPresenter.onSelected(pos);
+            mPresenter.onSelected(position);
         }
     }
 
     @Override
-    public void seeDetails(String equation, ArrayList<Detail> details) {
+    public void seeDetails(String equation, ArrayList<EquationDetail> details) {
         Intent intent = new Intent(this.getActivity(), DetailsActivity.class);
         intent.putExtra(MainActivity.EQUATION_NAME_SEND_CODE, equation);
         intent.putParcelableArrayListExtra(MainActivity.DETAILS_SEND_CODE, details);
@@ -213,13 +216,13 @@ public class SearchFragment extends Fragment implements ISearchView, ResultAdapt
 
     @Override
     public void toMoreButton() {
-        mSearchBtn.setText("Hiển thị thêm");
+        mSearchBtn.setText(SHOW_MORE_TXT);
         mShowMoreMode = true;
     }
 
     @Override
     public void toSearchButton() {
-        mSearchBtn.setText("Tìm Kiếm");
+        mSearchBtn.setText(SEARCH_TXT);
         mShowMoreMode = false;
     }
 }

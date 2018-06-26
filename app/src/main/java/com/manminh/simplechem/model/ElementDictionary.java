@@ -11,6 +11,7 @@ public class ElementDictionary {
     // supported element names
     private static Set<String> mElementNameRef = null;
 
+    // Init data is needed before any call to isElement
     public static void setUpData(Set<String> data) {
         mElementNameRef = data;
     }
