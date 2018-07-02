@@ -62,10 +62,18 @@ public class MainActivity extends AppCompatActivity implements
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mSearchFragment = SearchFragment.newInstance();
-        mBalanceFragment = BalanceFragment.newInstance();
-        mElectSeriesFragment = ElectSeriesFragment.newInstance();
-        mActivitySeriesFragment = ActivitySeriesFragment.newInstance();
+        if (mSearchFragment == null) {
+            mSearchFragment = SearchFragment.newInstance();
+        }
+        if (mBalanceFragment == null) {
+            mBalanceFragment = BalanceFragment.newInstance();
+        }
+        if (mElectSeriesFragment == null) {
+            mElectSeriesFragment = ElectSeriesFragment.newInstance();
+        }
+        if (mActivitySeriesFragment == null) {
+            mActivitySeriesFragment = ActivitySeriesFragment.newInstance();
+        }
         mFragmentManager = getSupportFragmentManager();
 
         NavigationView mNavView = findViewById(R.id.nav_view);
@@ -93,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements
 
         });
 
-        mFragmentManager.beginTransaction().add(R.id.fragment_panel, mSearchFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.fragment_panel, mSearchFragment).commit();
         ElementDictionary.setUpData(XmlDataManager.getElementSymbols(this));
     }
 
