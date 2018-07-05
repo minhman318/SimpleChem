@@ -3,6 +3,7 @@
     package="com.manminh.simplechem">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.details.DetailsActivity" />
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr"/>
     </application>
 
 </manifest>
